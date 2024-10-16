@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/statisticsFragment">
+
+    <fragment
+        android:id="@+id/personFragment"
+        android:name="ru.evgenykuzakov.rice.PersonFragment"
+        android:label="PersonFragment"
+        tools:layout="@layout/person_fragment"/>
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="ru.evgenykuzakov.rice.StatisticsFragment"
+        android:label="StatisticsFragment"
+        tools:layout="@layout/statistics_fragment"/>
+    <fragment
+        android:id="@+id/foodFragment"
+        android:name="ru.evgenykuzakov.rice.FoodFragment"
+        android:label="FoodFragment"
+        tools:layout="@layout/food_fragment"/>
+    <fragment
+        android:id="@+id/trainingFragment"
+        android:name="ru.evgenykuzakov.rice.TrainingFragment"
+        android:label="TrainingFragment"
+        tools:layout="@layout/training_fragment"/>
+</navigation>
