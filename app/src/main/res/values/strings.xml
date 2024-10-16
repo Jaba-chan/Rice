@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Rice</string>
+    <string name="statistics">Статистика</string>
+    <string name="main">Главная</string>
+    <string name="food">Еда</string>
+    <string name="training">Тренировки</string>
 </resources>
