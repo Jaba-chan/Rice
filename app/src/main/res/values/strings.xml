@@ -4,4 +4,15 @@
     <string name="main">Главная</string>
     <string name="food">Еда</string>
     <string name="training">Тренировки</string>
+    <string name="abbreviation_monday">Пн</string>
+    <string name="abbreviation_tuesday">Вт</string>
+    <string name="abbreviation_wednesday">Ср</string>
+    <string name="abbreviation_thursday">Чт</string>
+    <string name="abbreviation_friday">Пт</string>
+    <string name="abbreviation_saturday">Сб</string>
+    <string name="abbreviation_sunday">Вс</string>
+    <string name="breakfast">Завтрак</string>
+    <string name="lunch">Обед</string>
+    <string name="dinner">Ужин</string>
+    <string name="extra_meal">Перекус</string>
 </resources>
