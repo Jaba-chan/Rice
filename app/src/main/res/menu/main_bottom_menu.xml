@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/PersonalSheet"
+        android:id="@+id/menuPersonalSheet"
         android:icon="@drawable/person_img"
         android:title="@string/main" />
     <item
-        android:id="@+id/SportsmenStatistic"
+        android:id="@+id/menuSportsmenStatistic"
         android:icon="@drawable/statistics_img"
         android:title="@string/statistics" />
     <item
-        android:id="@+id/Food"
+        android:id="@+id/menuFood"
         android:icon="@drawable/food_img"
         android:title="@string/food" />
     <item
-        android:id="@+id/Training"
+        android:id="@+id/menuTraining"
         android:icon="@drawable/training_img"
         android:title="@string/training" />
 </menu>

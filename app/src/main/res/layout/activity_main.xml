@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fcv"
+        android:id="@+id/fcvMain"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -25,7 +25,7 @@
         android:id="@+id/bnmMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/fcv"
+        app:layout_constraintTop_toBottomOf="@id/fcvMain"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
