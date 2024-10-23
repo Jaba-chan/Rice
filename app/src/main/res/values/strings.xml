@@ -14,5 +14,5 @@
     <string name="breakfast">Завтрак</string>
     <string name="lunch">Обед</string>
     <string name="dinner">Ужин</string>
-    <string name="extra_meal">Перекус</string>
+    <string name="extra_meals">Перекус</string>
 </resources>

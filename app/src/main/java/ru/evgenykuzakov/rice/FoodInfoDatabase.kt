@@ -5,11 +5,11 @@ import androidx.room.Database
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
-@Database(entities = [FoodInfo::class], version = 4)
+@Database(entities = [FoodInfo::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun foodDao(): FoodDAO
     companion object {
-        @Volatile
+
         private var appDatabase: AppDatabase? = null
 
         fun getAppDatabase(context: Context?): AppDatabase? {

@@ -6,17 +6,28 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class FoodRecyclerViewAdapter(val items: MutableList<Any>) :
+class MealsRecyclerViewAdapter :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-        companion object {
-            val VIEW_TYPE_MEAL = 1
-            val VIEW_TYPE_HEADING = 2
-        }
+    companion object {
+        val VIEW_TYPE_MEAL = 1
+        val VIEW_TYPE_HEADING = 2
+    }
 
+    private var items: MutableList<Any>? = mutableListOf()
+
+    fun getMeals(): MutableList<Any>? {
+        return items
+    }
+
+    fun setMeals(items: MutableList<Any>?) {
+        this.items = items
+        notifyDataSetChanged()
+    }
 
     class MealHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvName: TextView
         val tvAmount: TextView
+
         init {
             tvName = itemView.findViewById<TextView>(R.id.tvName)
             tvAmount = itemView.findViewById<TextView>(R.id.tvAmount)
@@ -25,14 +36,15 @@ class FoodRecyclerViewAdapter(val items: MutableList<Any>) :
 
     class HeadingHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvHeadingOfMeal: TextView
+
         init {
             tvHeadingOfMeal = itemView.findViewById<TextView>(R.id.tvHeadingOfMeal)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (items[position]) {
-            is TestMeal -> VIEW_TYPE_MEAL
+        return when (items?.get(position)) {
+            is MealsTest -> VIEW_TYPE_MEAL
             is Heading -> VIEW_TYPE_HEADING
             else -> throw IllegalArgumentException("Unknown item type")
         }
@@ -59,20 +71,20 @@ class FoodRecyclerViewAdapter(val items: MutableList<Any>) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is MealHolder -> {
-                val item = items[position] as TestMeal
+                val item = items?.get(position) as MealsTest
                 holder.tvName.text = item.name
                 holder.tvAmount.text = item.amount.toString()
             }
 
             is HeadingHolder -> {
-                val item = items[position] as Heading
+                val item = items?.get(position) as Heading
                 holder.tvHeadingOfMeal.text = item.heading
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return items?.size ?: 0
     }
 
 }
