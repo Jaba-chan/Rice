@@ -5,20 +5,20 @@ import androidx.room.Database
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
-@Database(entities = [FoodInfo::class], version = 1)
-abstract class AppDatabase : RoomDatabase() {
+@Database(entities = [FoodInfo::class], version = 2)
+abstract class FoodInfoDatabase : RoomDatabase() {
     abstract fun foodDao(): FoodDAO
     companion object {
 
-        private var appDatabase: AppDatabase? = null
+        private var appDatabase: FoodInfoDatabase? = null
 
-        fun getAppDatabase(context: Context?): AppDatabase? {
+        fun getFoodInfoDatabase(context: Context?): FoodInfoDatabase? {
             if (appDatabase == null) {
                 appDatabase = databaseBuilder(
                     context!!,
-                    AppDatabase::class.java, "your_database_name.db"
+                    FoodInfoDatabase::class.java, "your_database_name.db"
                 )
-                    .createFromAsset("database/111.db") // путь к базе данных в папке assets
+                    .createFromAsset("database/111.db")
                     .fallbackToDestructiveMigration()
                     .build()
             }

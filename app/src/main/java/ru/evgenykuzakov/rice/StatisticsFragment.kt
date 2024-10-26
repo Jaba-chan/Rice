@@ -16,10 +16,10 @@ class StatisticsFragment: Fragment(R.layout.statistics_fragment) {
 
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
-            val db = AppDatabase.getAppDatabase(requireActivity())
+            val db = FoodInfoDatabase.getFoodInfoDatabase(requireActivity())
             val dao: FoodDAO = db!!.foodDao()
             val users: List<FoodInfo> = dao.getAll()
-            tv1.text = users.get(0).producer
+            tv1.text = users[0].producer
         }
     }
 

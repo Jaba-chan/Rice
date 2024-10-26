@@ -9,9 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MealsViewModel(application: Application) : AndroidViewModel(application) {
+class ShowMealsViewModel(application: Application) : AndroidViewModel(application) {
     private val mealsDatabase = MealsDatabase.getAppDatabase(application)
     private var meals: MutableLiveData<MutableList<Any>?> = MutableLiveData()
+    private lateinit var date: String
 
     private val breakfastHeading = listOf(
         Heading(
@@ -40,50 +41,49 @@ class MealsViewModel(application: Application) : AndroidViewModel(application) {
 
     private suspend fun getBreakfastMeals(): List<MealsTest> {
         return withContext(Dispatchers.IO) {
-            mealsDatabase!!.mealsDao().getBreakfastData()
+            mealsDatabase!!.mealsDao().getBreakfastData(date = date)
         }
     }
 
     private suspend fun getLunchMeals(): List<MealsTest> {
         return withContext(Dispatchers.IO) {
-            mealsDatabase!!.mealsDao().getLunch()
+            mealsDatabase!!.mealsDao().getLunch(date = date)
         }
     }
 
     private suspend fun getDinnerMeals(): List<MealsTest> {
         return withContext(Dispatchers.IO) {
-            mealsDatabase!!.mealsDao().getDinnerData()
+            mealsDatabase!!.mealsDao().getDinnerData(date = date)
         }
     }
 
     private suspend fun getExtraMeals(): List<MealsTest> {
         return withContext(Dispatchers.IO) {
-            mealsDatabase!!.mealsDao().getExtraMealsData()
+            mealsDatabase!!.mealsDao().getExtraMealsData(date = date)
         }
     }
 
     fun getMeals(): LiveData<MutableList<Any>?> {
         return meals
     }
-
-    fun setMeals(meals: MutableList<Any>?) {
-        this.meals.value = meals
+    fun setDate(date: String){
+        this.date = date
     }
 
-    fun init() {
+    private fun init() {
         mealsDatabase!!.mealsDao().insert(
-            MealsTest(0, "Молоко", 100.0, DatabaseNamesEnum.BREAKFAST_DATABASE, 2),
-            MealsTest(0, "Хлеб", 10.0, DatabaseNamesEnum.BREAKFAST_DATABASE, 3),
-            MealsTest(0, "Яйца", 50.0, DatabaseNamesEnum.BREAKFAST_DATABASE, 4),
-            MealsTest(0, "Резиновый хуй", 100.0, DatabaseNamesEnum.LUNCH_DATABASE, 6),
-            MealsTest(0, "!!!!", 10.0, DatabaseNamesEnum.LUNCH_DATABASE, 7),
-            MealsTest(0, "?????", 50.0, DatabaseNamesEnum.LUNCH_DATABASE, 8),
-            MealsTest(0, "qqqqq", 100.0, DatabaseNamesEnum.DINNER_DATABASE, 10),
-            MealsTest(0, "fffff", 10.0, DatabaseNamesEnum.DINNER_DATABASE, 11),
-            MealsTest(0, "dddddd", 50.0, DatabaseNamesEnum.DINNER_DATABASE, 12),
-            MealsTest(0, "1111", 100.0, DatabaseNamesEnum.EXTRA_MEALS_DATABASE, 14),
-            MealsTest(0, "222", 10.0, DatabaseNamesEnum.EXTRA_MEALS_DATABASE, 15),
-            MealsTest(0, "4444", 50.0, DatabaseNamesEnum.EXTRA_MEALS_DATABASE, 16)
+            MealsTest(0, "Молоко", 100.0, DatabaseNamesEnum.BREAKFAST_DATABASE, 2, "2024-10-26"),
+            MealsTest(0, "Хлеб", 10.0, DatabaseNamesEnum.BREAKFAST_DATABASE, 3, "2024-10-26"),
+            MealsTest(0, "Яйца", 50.0, DatabaseNamesEnum.BREAKFAST_DATABASE, 4, "2024-10-25"),
+            MealsTest(0, "Резиновый хуй", 100.0, DatabaseNamesEnum.LUNCH_DATABASE, 6, "2024-10-26"),
+            MealsTest(0, "!!!!", 10.0, DatabaseNamesEnum.LUNCH_DATABASE, 7, "2024-10-26"),
+            MealsTest(0, "?????", 50.0, DatabaseNamesEnum.LUNCH_DATABASE, 8, "2024-10-25"),
+            MealsTest(0, "qqqqq", 100.0, DatabaseNamesEnum.DINNER_DATABASE, 10, "2024-10-26"),
+            MealsTest(0, "fffff", 10.0, DatabaseNamesEnum.DINNER_DATABASE, 11, "2024-10-26"),
+            MealsTest(0, "dddddd", 50.0, DatabaseNamesEnum.DINNER_DATABASE, 12, "2024-10-23"),
+            MealsTest(0, "1111", 100.0, DatabaseNamesEnum.EXTRA_MEALS_DATABASE, 14, "2024-10-23"),
+            MealsTest(0, "222", 10.0, DatabaseNamesEnum.EXTRA_MEALS_DATABASE, 15, "2024-10-26"),
+            MealsTest(0, "4444", 50.0, DatabaseNamesEnum.EXTRA_MEALS_DATABASE, 16, "2024-10-26")
         )
     }
 
@@ -95,6 +95,20 @@ class MealsViewModel(application: Application) : AndroidViewModel(application) {
                         + dinnerHeading + getDinnerMeals()
                         + extraMealsHeading + getExtraMeals()).toMutableList()
             )
+        }
+    }
+
+    fun remove(id: Int, meals: MutableList<Any>?){
+        CoroutineScope(Dispatchers.IO).launch {
+            mealsDatabase!!.mealsDao().delete(id)
+            var i = 0
+            while (i < (meals?.size ?: 0)) {
+                val item = meals?.get(i)
+                if (item is MealsTest) {
+                    mealsDatabase.mealsDao().updateItem(item.copy(position = i + 1))
+                }
+                i++
+            }
         }
     }
 

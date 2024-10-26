@@ -1,25 +1,53 @@
 package ru.evgenykuzakov.rice
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
-class FoodInsideFragment(private val info: String) : Fragment(R.layout.food_inside_fragment) {
-    lateinit var model: MealsViewModel
+class FoodInsideFragment(private val daysOfTheWeek: Date) : Fragment(R.layout.food_inside_fragment) {
+    lateinit var model: ShowMealsViewModel
+    lateinit var resultLauncher: ActivityResultLauncher<Intent>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val rvMain = view.findViewById<RecyclerView>(R.id.rvMain)
+        val fabAdd = view.findViewById<FloatingActionButton>(R.id.fabAdd)
+        val adapter = ShowMealsRecyclerViewAdapter()
 
-        model = ViewModelProvider(this)[MealsViewModel::class.java]
+        val navHostFragment = requireActivity().supportFragmentManager
+            .findFragmentById(R.id.fcvMain) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        val adapter = MealsRecyclerViewAdapter()
+        model = ViewModelProvider(this)[ShowMealsViewModel::class.java]
+        model.setDate(getDate(daysOfTheWeek))
+
 
         model.getMeals().observe(viewLifecycleOwner) {
             CoroutineScope(Dispatchers.Main).launch {
@@ -37,13 +65,13 @@ class FoodInsideFragment(private val info: String) : Fragment(R.layout.food_insi
                 val pos = viewHolder.adapterPosition
                 val viewType = adapter.getItemViewType(pos)
 
-                return if (viewType == MealsRecyclerViewAdapter.VIEW_TYPE_MEAL) {
+                return if (viewType == ShowMealsRecyclerViewAdapter.VIEW_TYPE_MEAL) {
                     makeMovementFlags(
                         ItemTouchHelper.UP + ItemTouchHelper.DOWN,
                         ItemTouchHelper.LEFT
                     )
                 } else {
-                    makeMovementFlags(0, ItemTouchHelper.LEFT)
+                    makeMovementFlags(0,0)
                 }
             }
 
@@ -61,7 +89,7 @@ class FoodInsideFragment(private val info: String) : Fragment(R.layout.food_insi
                         adapter.getMeals()?.add(toPos, item)
                     }
                     adapter.notifyItemMoved(fromPos, toPos)
-                    if (target.itemViewType == MealsRecyclerViewAdapter.VIEW_TYPE_MEAL) {
+                    if (target.itemViewType == ShowMealsRecyclerViewAdapter.VIEW_TYPE_MEAL) {
                         model.update(adapter.getMeals())
                     }
                     return  true
@@ -95,17 +123,31 @@ class FoodInsideFragment(private val info: String) : Fragment(R.layout.food_insi
                 )
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val pos = viewHolder.adapterPosition
+                val item = adapter.getMeals()?.removeAt(pos)
+                adapter.notifyItemRemoved(pos)
+                model.remove((item as MealsTest).id, adapter.getMeals())
+            }
+
         }
 
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(rvMain)
 
+        fabAdd.setOnClickListener{
+            val intent = Intent(requireActivity(), AddMealsActivity::class.java)
+            resultLauncher.launch(intent)
+        }
     }
 
     override fun onResume() {
         super.onResume()
         model.refreshList()
+    }
+
+    fun getDate(date: Date): String{
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
 }
 

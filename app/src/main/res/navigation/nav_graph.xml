@@ -25,4 +25,9 @@
         android:name="ru.evgenykuzakov.rice.TrainingFragment"
         android:label="TrainingFragment"
         tools:layout="@layout/training_fragment"/>
+    <fragment
+        android:id="@+id/addMealsFragment"
+        android:name="ru.evgenykuzakov.rice.AddMealsActivity"
+        android:label="AddMealsFragment"
+        tools:layout="@layout/add_meals_activity"/>
 </navigation>
