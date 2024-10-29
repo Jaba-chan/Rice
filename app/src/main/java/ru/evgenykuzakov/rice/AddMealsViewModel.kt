@@ -19,6 +19,5 @@ class AddMealsViewModel(application: Application) : AndroidViewModel(application
             foodDatabase!!.foodDao().findByName(name)
         }
     }
-
 }
 

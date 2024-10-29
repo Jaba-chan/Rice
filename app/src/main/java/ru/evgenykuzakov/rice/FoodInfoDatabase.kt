@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(entities = [FoodInfo::class], version = 2)
 abstract class FoodInfoDatabase : RoomDatabase() {
@@ -18,7 +20,7 @@ abstract class FoodInfoDatabase : RoomDatabase() {
                     context!!,
                     FoodInfoDatabase::class.java, "your_database_name.db"
                 )
-                    .createFromAsset("database/111.db")
+                    .createFromAsset("database/testDB.db")
                     .fallbackToDestructiveMigration()
                     .build()
             }

@@ -2,9 +2,10 @@ package ru.evgenykuzakov.rice
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "foods", )
+@Entity(tableName = "foods", indices = [Index(value = ["name"])])
 data class FoodInfo(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "name") val name: String,                            // название товара

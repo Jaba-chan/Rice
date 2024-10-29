@@ -10,8 +10,22 @@ interface FoodDAO {
     @Query("SELECT * FROM foods")
     fun getAll(): List<FoodInfo>
 
-    @Query("SELECT * FROM foods WHERE name LIKE :name")
-    fun findByName(name: String): List<FoodInfo>?
+    @Query("""
+        SELECT * FROM foods
+        WHERE name LIKE :query || '%'          
+           OR name LIKE '% ' || :query || '%'    
+           OR name LIKE '%' || :query || '%'    
+        ORDER BY 
+           CASE 
+               WHEN name LIKE :query || '%' THEN 1        
+               WHEN name LIKE '% ' || :query || '%' THEN 2 
+               ELSE 3                                   
+           END
+    """)
+    fun findByName(query: String): List<FoodInfo>
+
+    @Query("SELECT * FROM foods WHERE id = :id LIMIT 1")
+    fun findById(id: Int): FoodInfo
 
     @Insert
     fun insertAll(vararg foods: FoodInfo)

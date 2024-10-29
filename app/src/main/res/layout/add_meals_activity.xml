@@ -5,6 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".AddMealsActivity">
+
+    <Spinner
+        android:id="@+id/spChooseMeals"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/meals"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+    </Spinner>
+
     <ImageView
         android:id="@+id/ivSearch"
         android:src="@drawable/search_icon"
@@ -12,7 +24,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/edSearch"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spChooseMeals"
         >
     </ImageView>
 
@@ -22,7 +34,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/ivSearch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/spChooseMeals">
     </EditText>
 
     <androidx.recyclerview.widget.RecyclerView

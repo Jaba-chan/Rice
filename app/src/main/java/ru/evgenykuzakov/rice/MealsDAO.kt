@@ -18,7 +18,7 @@ interface MealsDAO {
 
     @Query("SELECT * FROM meals WHERE `database` =:database " +
             "AND date LIKE :date ORDER BY position")
-    fun getLunch(database: DatabaseNamesEnum = DatabaseNamesEnum.LUNCH_DATABASE,
+    fun getLunchData(database: DatabaseNamesEnum = DatabaseNamesEnum.LUNCH_DATABASE,
                  date: String): List<MealsTest>
 
     @Query("SELECT * FROM meals WHERE `database` =:database " +
@@ -30,6 +30,26 @@ interface MealsDAO {
             "AND date LIKE :date ORDER BY position")
     fun getExtraMealsData(database: DatabaseNamesEnum = DatabaseNamesEnum.EXTRA_MEALS_DATABASE,
                           date: String): List<MealsTest>
+
+    @Query("SELECT MAX(position) FROM meals WHERE `database` =:database " +
+            "AND date LIKE :date")
+    fun getBreakfastLastPosition(database: DatabaseNamesEnum = DatabaseNamesEnum.BREAKFAST_DATABASE,
+                                  date: String): Int
+    @Query("SELECT MAX(position) FROM meals WHERE `database` =:database " +
+            "AND date LIKE :date")
+    fun getLunchLastPosition(database: DatabaseNamesEnum = DatabaseNamesEnum.LUNCH_DATABASE,
+                                  date: String): Int
+    @Query("SELECT MAX(position) FROM meals WHERE `database` =:database " +
+            "AND date LIKE :date")
+    fun getDinnerLastPosition(database: DatabaseNamesEnum = DatabaseNamesEnum.DINNER_DATABASE,
+                                  date: String): Int
+    @Query("SELECT MAX(position) FROM meals WHERE `database` =:database " +
+            "AND date LIKE :date")
+    fun getExtraMealsLastPosition(database: DatabaseNamesEnum = DatabaseNamesEnum.EXTRA_MEALS_DATABASE,
+                          date: String): Int
+
+    @Query("SELECT SUM(calories) FROM meals WHERE date LIKE :date")
+    fun getNutrients(date: String): Int
 
     @Update
     suspend fun updateItem(item: MealsTest)

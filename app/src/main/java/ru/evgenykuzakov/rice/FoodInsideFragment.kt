@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,21 +19,22 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class FoodInsideFragment(private val daysOfTheWeek: Date) : Fragment(R.layout.food_inside_fragment) {
+class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside_fragment) {
     lateinit var model: ShowMealsViewModel
-    lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data
-
+                model.refreshList()
             }
+
         }
     }
 
@@ -39,15 +42,23 @@ class FoodInsideFragment(private val daysOfTheWeek: Date) : Fragment(R.layout.fo
         super.onViewCreated(view, savedInstanceState)
         val rvMain = view.findViewById<RecyclerView>(R.id.rvMain)
         val fabAdd = view.findViewById<FloatingActionButton>(R.id.fabAdd)
+        val tvCalories = view.findViewById<TextView>(R.id.tvCalories)
+        val tvProtein = view.findViewById<TextView>(R.id.tvProtein)
+        val tvFats = view.findViewById<TextView>(R.id.tvFats)
+        val tvCarbohydrates = view.findViewById<TextView>(R.id.tvCarbohydrates)
         val adapter = ShowMealsRecyclerViewAdapter()
 
-        val navHostFragment = requireActivity().supportFragmentManager
-            .findFragmentById(R.id.fcvMain) as NavHostFragment
-        val navController = navHostFragment.navController
 
         model = ViewModelProvider(this)[ShowMealsViewModel::class.java]
-        model.setDate(getDate(daysOfTheWeek))
+        model.setDate(getDate(date))
+        model.refreshList()
 
+        CoroutineScope(Dispatchers.IO).launch{
+            val nutrients = model.getNutrients(getDate(date))
+            withContext(Dispatchers.Main){
+                tvCalories.text = nutrients.toString()
+            }
+        }
 
         model.getMeals().observe(viewLifecycleOwner) {
             CoroutineScope(Dispatchers.Main).launch {
@@ -89,9 +100,7 @@ class FoodInsideFragment(private val daysOfTheWeek: Date) : Fragment(R.layout.fo
                         adapter.getMeals()?.add(toPos, item)
                     }
                     adapter.notifyItemMoved(fromPos, toPos)
-                    if (target.itemViewType == ShowMealsRecyclerViewAdapter.VIEW_TYPE_MEAL) {
-                        model.update(adapter.getMeals())
-                    }
+                    model.update(adapter.getMeals())
                     return  true
                 }
                 return false
@@ -136,17 +145,27 @@ class FoodInsideFragment(private val daysOfTheWeek: Date) : Fragment(R.layout.fo
         itemTouchHelper.attachToRecyclerView(rvMain)
 
         fabAdd.setOnClickListener{
-            val intent = Intent(requireActivity(), AddMealsActivity::class.java)
-            resultLauncher.launch(intent)
+            CoroutineScope(Dispatchers.IO).launch {
+                val breakfastLastPosition = model.getBreakfastLastPosition()
+                val lunchLastPosition = model.getLunchLastPosition()
+                val dinnerLastPosition = model.getDinnerLastPosition()
+                val extraLastPosition = model.getExtraLastPosition()
+
+                withContext(Dispatchers.Main){
+                    val intent = AddMealsActivity.newIntent(requireActivity(),
+                        getDate(date),
+                        breakfastLastPosition,
+                        lunchLastPosition,
+                        dinnerLastPosition,
+                        extraLastPosition)
+                    resultLauncher.launch(intent)
+                }
+            }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        model.refreshList()
-    }
 
-    fun getDate(date: Date): String{
+    private fun getDate(date: Date): String{
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
 }

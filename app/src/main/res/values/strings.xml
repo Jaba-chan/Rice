@@ -11,8 +11,14 @@
     <string name="abbreviation_friday">Пт</string>
     <string name="abbreviation_saturday">Сб</string>
     <string name="abbreviation_sunday">Вс</string>
-    <string name="breakfast">Завтрак</string>
-    <string name="lunch">Обед</string>
-    <string name="dinner">Ужин</string>
-    <string name="extra_meals">Перекус</string>
+    <string name="calories">Калории: %1$s</string>
+    <string name="protein">Белки: %1$s</string>
+    <string name="fats">Жиры: %1$s</string>
+    <string name="carbohydrates">Углеводы: %1$s</string>
+    <string-array name="meals">
+        <item>Завтрак</item>
+        <item>Обед</item>
+        <item>Ужин</item>
+        <item>Перекус</item>
+    </string-array>
 </resources>
