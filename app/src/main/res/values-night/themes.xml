@@ -1,7 +1,19 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Rice" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:textColorPrimary">@color/text_color_primary_dark_theme</item>
+        <item name="android:textColorSecondary">@color/text_color_secondary_dark_theme</item>
+
+        <item name="android:statusBarColor">@color/window_background_color_dark_theme</item>
+        <item name="android:windowBackground">@color/window_background_color_dark_theme</item>
+
+        <item name="colorPrimary">@color/primary_color_dark_theme</item>
+        <item name="colorSurface">@color/color_surface_dark_theme</item>
+        <item name="colorOnPrimary">@color/on_primary_color_dark_theme</item>
+        <item name="colorSurfaceContainer">@color/color_surface_dark_theme</item>
+        <item name="colorButtonNormal">@color/grey_icon_color_dark_them</item>
+
+        <item name="bottomNavigationStyle">@style/bottomNavigationView</item>
+        <item name="floatingActionButtonStyle">@style/floatingActionButton</item>
     </style>
 </resources>

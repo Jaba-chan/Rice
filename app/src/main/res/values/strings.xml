@@ -4,6 +4,7 @@
     <string name="main">Главная</string>
     <string name="food">Еда</string>
     <string name="training">Тренировки</string>
+
     <string name="abbreviation_monday">Пн</string>
     <string name="abbreviation_tuesday">Вт</string>
     <string name="abbreviation_wednesday">Ср</string>
@@ -11,10 +12,20 @@
     <string name="abbreviation_friday">Пт</string>
     <string name="abbreviation_saturday">Сб</string>
     <string name="abbreviation_sunday">Вс</string>
+
     <string name="calories">Калории: %1$s</string>
     <string name="protein">Белки: %1$s</string>
     <string name="fats">Жиры: %1$s</string>
     <string name="carbohydrates">Углеводы: %1$s</string>
+
+    <string name="description_breakfast_icon">Breakfast icon</string>
+    <string name="description_amount_of_product_icon">Amount of product</string>
+    <string name="description_hiding_add_option_icon">Expanding add option button</string>
+    <string name="add_text">Добавить</string>
+    <string name="description_add_new_meals_button">Add new meal</string>
+    <string name="description_search_icon">Search icon</string>
+    <string name="description_chose_week_button">Chose week button</string>
+
     <string-array name="meals">
         <item>Завтрак</item>
         <item>Обед</item>

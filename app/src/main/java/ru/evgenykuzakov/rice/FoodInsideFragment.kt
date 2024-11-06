@@ -4,15 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Canvas
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -46,21 +43,35 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
         val tvProtein = view.findViewById<TextView>(R.id.tvProtein)
         val tvFats = view.findViewById<TextView>(R.id.tvFats)
         val tvCarbohydrates = view.findViewById<TextView>(R.id.tvCarbohydrates)
-        val adapter = ShowMealsRecyclerViewAdapter()
-
 
         model = ViewModelProvider(this)[ShowMealsViewModel::class.java]
+        val foodInsideViewModel = ViewModelProvider(requireActivity())[FoodInsideViewModel::class.java]
         model.setDate(getDate(date))
         model.refreshList()
+        val adapter = ShowMealsRecyclerViewAdapter()
 
-        CoroutineScope(Dispatchers.IO).launch{
-            val nutrients = model.getNutrients(getDate(date))
-            withContext(Dispatchers.Main){
-                tvCalories.text = nutrients.toString()
+        model.getNutrients().observe(viewLifecycleOwner) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val nutrients = model.getNutrients()
+                withContext(Dispatchers.Main) {
+                    tvCalories.text = String.format(
+                        resources.getString(R.string.calories),
+                        nutrients.value?.calories.toString())
+                    tvProtein.text = String.format(
+                        resources.getString(R.string.protein),
+                        nutrients.value?.protein.toString())
+                    tvFats.text = String.format(
+                        resources.getString(R.string.fats),
+                        nutrients.value?.fats.toString())
+                    tvCarbohydrates.text = String.format(
+                        resources.getString(R.string.carbohydrates),
+                        nutrients.value?.carbohydrates.toString())
+                }
             }
         }
 
         model.getMeals().observe(viewLifecycleOwner) {
+            foodInsideViewModel.setWasChanged(!foodInsideViewModel.getWasChanged().value!!)
             CoroutineScope(Dispatchers.Main).launch {
                 adapter.setMeals(model.getMeals().value?.toMutableList())
             }
@@ -136,7 +147,7 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
                 val pos = viewHolder.adapterPosition
                 val item = adapter.getMeals()?.removeAt(pos)
                 adapter.notifyItemRemoved(pos)
-                model.remove((item as MealsTest).id, adapter.getMeals())
+                model.remove((item as MealsTest).id)
             }
 
         }

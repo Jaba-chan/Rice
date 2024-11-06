@@ -25,6 +25,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/edSearch"
         app:layout_constraintTop_toBottomOf="@id/spChooseMeals"
+        android:contentDescription="@string/description_search_icon"
         >
     </ImageView>
 
@@ -32,9 +33,11 @@
         android:id="@+id/edSearch"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/searchField"
         app:layout_constraintStart_toEndOf="@id/ivSearch"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spChooseMeals">
+        app:layout_constraintTop_toBottomOf="@id/spChooseMeals"
+        android:inputType="text">
     </EditText>
 
     <androidx.recyclerview.widget.RecyclerView

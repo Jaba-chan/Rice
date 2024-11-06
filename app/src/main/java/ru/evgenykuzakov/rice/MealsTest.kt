@@ -3,7 +3,6 @@ package ru.evgenykuzakov.rice
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.util.Date
 
 @Entity(tableName = "meals")
 data class MealsTest(
@@ -17,4 +16,11 @@ data class MealsTest(
     @ColumnInfo(name = "protein") val protein: Double,
     @ColumnInfo(name = "carbohydrates") val carbohydrates: Double,
     @ColumnInfo(name = "fats") val fats: Double
+)
+
+data class Nutrients(
+    val calories: Int,
+    val protein: Double,
+    val fats: Double,
+    val carbohydrates: Double
 )

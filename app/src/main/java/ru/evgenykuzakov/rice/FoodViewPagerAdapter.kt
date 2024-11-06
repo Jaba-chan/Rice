@@ -11,4 +11,5 @@ class FoodViewPagerAdapter(private val fragments: List<Fragment>, fragment: Frag
     override fun createFragment(position: Int): Fragment {
         return  fragments[position]
     }
+
 }

@@ -25,9 +25,14 @@
         android:name="ru.evgenykuzakov.rice.TrainingFragment"
         android:label="TrainingFragment"
         tools:layout="@layout/training_fragment"/>
-    <fragment
-        android:id="@+id/addMealsFragment"
+    <activity
+        android:id="@+id/addMealsActivity"
         android:name="ru.evgenykuzakov.rice.AddMealsActivity"
-        android:label="AddMealsFragment"
-        tools:layout="@layout/add_meals_activity"/>
+        android:label="add_meals_activity"
+        tools:layout="@layout/add_meals_activity" />
+    <fragment
+        android:id="@+id/foodInsideFragment"
+        android:name="ru.evgenykuzakov.rice.FoodInsideFragment"
+        android:label="FoodInsideFragment"
+        tools:layout="@layout/food_inside_fragment"/>
 </navigation>

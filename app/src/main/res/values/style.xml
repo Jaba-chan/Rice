@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="headingTextStyle">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+    <style name="bottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:backgroundTint">?colorSurfaceContainer</item>
+        <item name="itemIconSize">30dp</item>
+    </style>
+    <style name="searchField">
+        <item name="backgroundTint">@color/search_field_color</item>
+    </style>
+    <style name="floatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">?colorPrimary</item>
+        <item name="tint">?colorOnPrimary</item>
+    </style>
+    <style name="tabTextStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="tabLayout" parent="Widget.Material3.TabLayout">
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabIconTint">@null</item>
+    </style>
+    <style name="mealsTextStyle">
+
+    </style>
+</resources>

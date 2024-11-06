@@ -48,8 +48,15 @@ interface MealsDAO {
     fun getExtraMealsLastPosition(database: DatabaseNamesEnum = DatabaseNamesEnum.EXTRA_MEALS_DATABASE,
                           date: String): Int
 
-    @Query("SELECT SUM(calories) FROM meals WHERE date LIKE :date")
-    fun getNutrients(date: String): Int
+    @Query("SELECT SUM(calories) as calories, " +
+            "SUM(protein) as protein, " +
+            "SUM(fats) as fats, " +
+            "SUM(carbohydrates) as carbohydrates" +
+            " FROM meals WHERE date LIKE :date")
+    fun getNutrients(date: String): Nutrients
+
+    @Query("SELECT SUM(calories) as calories FROM meals WHERE date LIKE :date")
+    fun getCalories(date: String): Int
 
     @Update
     suspend fun updateItem(item: MealsTest)

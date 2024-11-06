@@ -1,7 +1,6 @@
 package ru.evgenykuzakov.rice
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +12,7 @@ import kotlinx.coroutines.withContext
 class ShowMealsViewModel(application: Application) : AndroidViewModel(application) {
     private val mealsDatabase = MealsDatabase.getAppDatabase(application)
     private var meals: MutableLiveData<MutableList<Any>?> = MutableLiveData()
+    private var nutrients: MutableLiveData<Nutrients?> = MutableLiveData()
     private lateinit var date: String
 
     private val breakfastHeading = listOf(
@@ -91,6 +91,9 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
     fun getMeals(): LiveData<MutableList<Any>?> {
         return meals
     }
+    fun getNutrients(): LiveData<Nutrients?>{
+        return nutrients
+    }
     fun setDate(date: String){
         this.date = date
     }
@@ -104,24 +107,21 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
                         + dinnerHeading + getDinnerMeals()
                         + extraMealsHeading + getExtraMeals()).toMutableList()
             )
+            nutrients.postValue(mealsDatabase!!.mealsDao().getNutrients(date))
         }
     }
 
-    fun remove(id: Int, meals: MutableList<Any>?){
+    fun remove(id: Int){
         CoroutineScope(Dispatchers.IO).launch {
             mealsDatabase!!.mealsDao().delete(id)
+            refreshList()
         }
     }
 
     fun insert(meal: MealsTest){
         CoroutineScope(Dispatchers.IO).launch {
             mealsDatabase!!.mealsDao().insert(meal)
-        }
-    }
-
-    suspend fun getNutrients(date: String): Int{
-        return withContext(Dispatchers.IO) {
-            mealsDatabase!!.mealsDao().getNutrients(date)
+            refreshList()
         }
     }
 
@@ -134,7 +134,6 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
                 val item = meals?.get(i)
                 if (item is Heading) {
                     headind = item.DB_NAme
-                    Log.e("dfffff", item.DB_NAme.toString())
                     j = 1
                 }
                 if (item is MealsTest) {
