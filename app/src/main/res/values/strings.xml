@@ -13,18 +13,22 @@
     <string name="abbreviation_saturday">Сб</string>
     <string name="abbreviation_sunday">Вс</string>
 
-    <string name="calories">Калории: %1$s</string>
-    <string name="protein">Белки: %1$s</string>
-    <string name="fats">Жиры: %1$s</string>
-    <string name="carbohydrates">Углеводы: %1$s</string>
+    <string name="calories">Калории</string>
+    <string name="protein">Белки</string>
+    <string name="fats">Жиры</string>
+    <string name="carbohydrates">Углеводы</string>
+    <string name="pattern_gramm">г</string>
 
     <string name="description_breakfast_icon">Breakfast icon</string>
     <string name="description_amount_of_product_icon">Amount of product</string>
     <string name="description_hiding_add_option_icon">Expanding add option button</string>
     <string name="add_text">Добавить</string>
-    <string name="description_add_new_meals_button">Add new meal</string>
+    <string name="description_add_new_meal_button">Add new meal</string>
     <string name="description_search_icon">Search icon</string>
     <string name="description_chose_week_button">Chose week button</string>
+    <string name="search_hint">Поиск</string>
+    <string name="description_clear_search_field_icon">Очистить поле поиска</string>
+    <string name="description_back_button_icon">Back button</string>
 
     <string-array name="meals">
         <item>Завтрак</item>
@@ -32,4 +36,14 @@
         <item>Ужин</item>
         <item>Перекус</item>
     </string-array>
+
+    <string-array name="measurement">
+        <item>грамм</item>
+        <item>порция</item>
+    </string-array>
+    <string-array name="default_measurement_amount">
+        <item>100</item>
+        <item>1</item>
+    </string-array>
+
 </resources>

@@ -5,10 +5,6 @@
         android:icon="@drawable/person_img"
         android:title="@string/main" />
     <item
-        android:id="@+id/menuSportsmenStatistic"
-        android:icon="@drawable/statistics_img"
-        android:title="@string/statistics" />
-    <item
         android:id="@+id/menuFood"
         android:icon="@drawable/food_img"
         android:title="@string/food" />
@@ -16,4 +12,8 @@
         android:id="@+id/menuTraining"
         android:icon="@drawable/training_img"
         android:title="@string/training" />
+    <item
+        android:id="@+id/menuSportsmenStatistic"
+        android:icon="@drawable/statistics_img"
+        android:title="@string/statistics" />
 </menu>

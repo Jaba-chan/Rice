@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/card_view_corner_radius"
+    android:backgroundTint="?android:windowBackground"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
@@ -18,20 +18,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/clAmountContainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                style="@style/headingAddMealsStyle"
                 android:id="@+id/tvFoodName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_vertical_heading_add_meals"
+                android:layout_marginStart="@dimen/margin_start_add_meal_items_heading"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ivExpanding"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                style="@style/headingTextStyle"
                 tools:text="Молоко">
             </TextView>
 
@@ -39,9 +40,10 @@
                 android:id="@+id/ivExpanding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/expand_circle_down_icon"
-                android:backgroundTint="?colorSurfaceContainer"
+                android:layout_marginTop="@dimen/margin_top_iv_expanding"
+                android:layout_marginEnd="@dimen/margin_end_add_meal_items_heading"
                 android:contentDescription="@string/description_hiding_add_option_icon"
+                android:src="@drawable/expand_down_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvFoodName"
@@ -49,92 +51,221 @@
             </ImageView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clAmountContainer"
+
+        <LinearLayout
+            android:id="@+id/llExtra"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone"
             tools:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/clMeasurementContainer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clHeadingContainer">
 
-            <ImageView
-                android:id="@+id/ivAmount"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clAmountContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/description_amount_of_product_icon"
-                android:src="@drawable/amount_of_meals_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/edAmount"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </ImageView>
-
-
-            <EditText
-                android:id="@+id/edAmount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/clMeasurementContainer"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivAmount"
-                app:layout_constraintTop_toTopOf="parent"
-                android:inputType="number">
-            </EditText>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clMeasurementContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clAmountContainer">
-
-            <ImageView
-                android:id="@+id/ivMeasurement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/description_amount_of_product_icon"
-                android:src="@drawable/list_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/edMeasurement"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-            </ImageView>
+                app:layout_constraintTop_toBottomOf="@id/clHeadingContainer">
 
-            <EditText
-                android:id="@+id/edMeasurement"
-                android:layout_width="0dp"
+                <ImageView
+                    style="@style/addMealItemIconsStyle"
+                    android:id="@+id/ivAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/description_amount_of_product_icon"
+                    android:src="@drawable/amount_of_meals_icon"
+                    android:backgroundTint="?colorSurfaceContainerHighest"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/edAmount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </ImageView>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edAmount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_end_ed_amount"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivAmount"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:boxBackgroundColor="?colorSurface"
+                    >
+
+                    <AutoCompleteTextView
+                        android:id="@+id/acvAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:textSize="@dimen/measurement_and_amount_fields_text_size"
+                        android:paddingVertical="@dimen/margin_vertical_measurement_and_amount_fields"
+                        android:paddingHorizontal="@dimen/margin_horizontal_measurement_and_amount_fields" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMeasurementContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/margin_top_measurement_cl"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivMeasurement"
-                app:layout_constraintTop_toTopOf="parent">
-            </EditText>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clAmountContainer">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    style="@style/addMealItemIconsStyle"
+                    android:id="@+id/ivMeasurement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/description_amount_of_product_icon"
+                    android:src="@drawable/list_icon"
+                    android:backgroundTint="?colorSurfaceContainerHighest"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/edMeasurement"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </ImageView>
 
-        <Button
-            android:id="@+id/btAddToMeals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/add_text"
-            android:visibility="gone"
-            tools:visibility="visible"
-            app:layout_constraintEnd_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clMeasurementContainer"
-            android:background="?colorPrimary"
-            >
-        </Button>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/edMeasurement"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_end_ed_amount"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivMeasurement"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:endIconMode="none"
+                    app:boxBackgroundColor="?colorSurface">
 
+                    <AutoCompleteTextView
+                        style="@style/measurementDropDownStyle"
+                        android:id="@+id/acvMeasurement"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:labelFor="@id/edMeasurement"
+                        android:textSize="@dimen/measurement_and_amount_fields_text_size"
+                        android:paddingVertical="@dimen/margin_vertical_measurement_and_amount_fields"
+                        android:paddingHorizontal="@dimen/margin_horizontal_measurement_and_amount_fields" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btAddToMeals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_text"
+                android:layout_marginTop="@dimen/margin_top_add_button"
+                android:layout_marginHorizontal="@dimen/margin_horizontal_add_button"
+                app:cornerRadius="@dimen/add_button_corner_radius"
+                android:backgroundTint="@color/button_add_background_color"
+                android:textColor="@color/button_add_text_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/glNutrients"
+                >
+            </Button>
+
+            <GridLayout
+                android:id="@+id/glNutrients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="2"
+                android:layout_marginVertical="@dimen/margin_vertical_nutrients_container"
+                android:layout_marginHorizontal="@dimen/margin_horizontal_nutrients"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clMeasurementContainer"
+                >
+
+                <LinearLayout
+                    style="@style/nutrientBlockLLStyle"
+                    android:layout_marginEnd="@dimen/margin_line"
+                    android:layout_marginBottom="@dimen/margin_line"
+                    >
+
+                    <TextView
+                        android:id="@+id/tvCaloriesHeading"
+                        style="@style/nutrientBlockHeadingStyle"
+                        android:text="@string/calories">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvCalories"
+                        style="@style/nutrientBlockStyle"
+                        tools:text="1000">
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/nutrientBlockLLStyle"
+                    android:layout_marginStart="@dimen/margin_line"
+                    android:layout_marginBottom="@dimen/margin_line">
+
+                    <TextView
+                        android:id="@+id/tvProteinHeading"
+                        style="@style/nutrientBlockHeadingStyle"
+                        android:text="@string/protein">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvProtein"
+                        style="@style/nutrientBlockStyle"
+                        tools:text="202">
+                    </TextView>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    style="@style/nutrientBlockLLStyle"
+                    android:layout_marginTop="@dimen/margin_line"
+                    android:layout_marginEnd="@dimen/margin_line">
+
+                    <TextView
+                        android:id="@+id/tvFatsHeading"
+                        style="@style/nutrientBlockHeadingStyle"
+                        android:text="@string/fats">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvFats"
+                        style="@style/nutrientBlockStyle"
+                        tools:text="230">
+                    </TextView>
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/nutrientBlockLLStyle"
+                    android:layout_marginStart="@dimen/margin_line"
+                    android:layout_marginTop="@dimen/margin_line">
+
+                    <TextView
+                        android:id="@+id/tvCarbohydratesHeading"
+                        style="@style/nutrientBlockHeadingStyle"
+                        android:text="@string/carbohydrates">
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvCarbohydrates"
+                        style="@style/nutrientBlockStyle"
+                        tools:text="82">
+                    </TextView>
+                </LinearLayout>
+            </GridLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </androidx.cardview.widget.CardView>

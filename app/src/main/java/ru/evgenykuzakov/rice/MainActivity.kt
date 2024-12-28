@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.fcvMain) as NavHostFragment
         val navController = navHostFragment.navController
 
-        bnmMain.setSelectedItemId(R.id.menuSportsmenStatistic)
+        bnmMain.setSelectedItemId(R.id.menuFood)
         bnmMain.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.menuPersonalSheet -> {
@@ -37,5 +37,7 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
     }
+
 }

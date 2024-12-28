@@ -1,29 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="headingTextStyle">
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">@dimen/heading_text_size</item>
         <item name="android:textColor">?android:textColorPrimary</item>
     </style>
-    <style name="bottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+    <style name="mealNameTextStyle">
+        <item name="android:textSize">@dimen/meal_name_text_size</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+    </style>
+    <style name="bottomNavigationViewStyle" parent="Widget.Material3.BottomNavigationView">
         <item name="android:backgroundTint">?colorSurfaceContainer</item>
         <item name="itemIconSize">30dp</item>
+        <item name="itemTextColor">?colorPrimary</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_color</item>
+        <item name="itemActiveIndicatorStyle">@style/customActiveIndicatorStyle</item>
+        <item name="itemBackground">?colorSurfaceContainer</item>
     </style>
-    <style name="searchField">
+
+    <style name="customActiveIndicatorStyle">
+        <item name="indicatorColor">@color/transparent</item>
+        <item name="indicatorSize">@dimen/bottom_nav_view_indicator_size</item>
+    </style>
+
+    <style name="searchFieldStyle">
         <item name="backgroundTint">@color/search_field_color</item>
     </style>
-    <style name="floatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+
+    <style name="floatingActionButtonStyle" parent="Widget.Material3.FloatingActionButton.Primary">
         <item name="backgroundTint">?colorPrimary</item>
         <item name="tint">?colorOnPrimary</item>
     </style>
+
     <style name="tabTextStyle">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/tab_text_size</item>
     </style>
-    <style name="tabLayout" parent="Widget.Material3.TabLayout">
-        <item name="tabIndicatorHeight">0dp</item>
+
+    <style name="tabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIndicatorHeight">@dimen/tab_indicator_height</item>
         <item name="tabMode">fixed</item>
         <item name="tabIconTint">@null</item>
+        <item name="tabTextColor">@color/tab_text_color</item>
     </style>
-    <style name="mealsTextStyle">
+    
+    <style name="nutrientBlockStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_color_primary_dark_theme</item>
+        <item name="android:textSize">@dimen/nutrient_block_text_size</item>
+        <item name="android:textAlignment">center</item>
+    </style>
 
+    <style name="nutrientBlockHeadingStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_color_primary_dark_theme</item>
+        <item name="android:textSize">@dimen/nutrient_block_heading_text_size</item>
+        <item name="android:textAlignment">center</item>
     </style>
+
+    <style name="nutrientBlockLLStyle">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:padding">@dimen/padding_nutrient_block</item>
+        <item name="android:background">@drawable/nutrients_container_rounded_corners</item>
+    </style>
+
+    <style name="headingAddMealsStyle">
+        <item name="android:textSize">@dimen/heading_add_meals_text_size</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:padding">@dimen/padding_add_meal</item>
+    </style>
+
+    <style name="addMealItemIconsStyle">
+        <item name="android:layout_marginStart">@dimen/margin_start_and_end_add_meal_items</item>
+        <item name="android:layout_marginEnd">@dimen/margin_start_and_end_add_meal_items</item>
+        <item name="android:padding">@dimen/padding_add_meal</item>
+    </style>
+
+
+    <style name="measurementDropDownStyle">
+        <item name="android:textSize">@dimen/measurement_dropdown_text_size</item>
+        <item name="android:popupBackground">?colorSurfaceContainer</item>
+    </style>
+
+    <style name="chooseMealDropDownStyle">
+        <item name="android:popupBackground">?colorSurfaceContainer</item>
+    </style>
+
+
 </resources>

@@ -8,12 +8,14 @@
         <item name="android:windowBackground">@color/window_background_color_dark_theme</item>
 
         <item name="colorPrimary">@color/primary_color_dark_theme</item>
-        <item name="colorSurface">@color/color_surface_dark_theme</item>
         <item name="colorOnPrimary">@color/on_primary_color_dark_theme</item>
-        <item name="colorSurfaceContainer">@color/color_surface_dark_theme</item>
-        <item name="colorButtonNormal">@color/grey_icon_color_dark_them</item>
+        <item name="colorSurface">@color/color_surface_dark_theme</item>
+        <item name="colorSurfaceContainer">@color/color_surface_container_dark_theme</item>
+        <item name="colorSurfaceContainerHigh">@color/color_surface_container_high_dark_theme</item>
+        <item name="colorSurfaceContainerHighest">@color/color_surface_container_highest_dark_theme</item>
+        <item name="colorButtonNormal">@color/color_button_normal_dark_theme</item>
 
-        <item name="bottomNavigationStyle">@style/bottomNavigationView</item>
-        <item name="floatingActionButtonStyle">@style/floatingActionButton</item>
+        <item name="bottomNavigationStyle">@style/bottomNavigationViewStyle</item>
+        <item name="floatingActionButtonStyle">@style/floatingActionButtonStyle</item>
     </style>
 </resources>

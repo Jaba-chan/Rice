@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_marginStart="@dimen/margin_start_meal_item"
+    android:layout_marginEnd="@dimen/margin_horizontal_rv_heading"
+    android:layout_marginBottom="@dimen/margin_bottom_meal_item"
+    app:cardCornerRadius="@dimen/meal_corner_radius"
+    >
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/padding_vertical_meal_item"
+        android:paddingHorizontal="10dp">
 
         <TextView
+            style="@style/mealNameTextStyle"
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,6 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Молоко">
+
         </TextView>
 
         <TextView
@@ -30,6 +38,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvName"
             tools:text="200 ml">
+
         </TextView>
 
 
