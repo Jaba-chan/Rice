@@ -139,7 +139,7 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
         }
     }
 
-    override fun onItemClick(position: Int, amountMultiplayer: Double) {
+    override fun onItemClick(position: Int, amount: Int, amountMultiplayer: Double) {
         val data = adapter.getData()[position]
 
         val pos = when(chosenMeal){
@@ -152,7 +152,7 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
         val meal = MealsTest(0,
             data.id,
             data.name,
-            amountMultiplayer,
+            amount,
             DatabaseNamesEnum.entries[chosenMeal],
             pos + 1,
             date,
@@ -178,4 +178,5 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
                 meal.carbohydrates * weight / MeasurementEnum.MEASUREMENT_PORTION.amount)
         }
     }
+
 }

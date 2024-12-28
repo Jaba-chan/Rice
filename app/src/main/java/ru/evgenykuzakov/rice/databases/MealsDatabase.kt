@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import ru.evgenykuzakov.rice.data.MealsTest
 import ru.evgenykuzakov.rice.databases.DAO.MealsDAO
 
-@Database(entities = [MealsTest::class], version = 20)
+@Database(entities = [MealsTest::class], version = 21)
 abstract class MealsDatabase : RoomDatabase() {
     abstract fun mealsDao(): MealsDAO
 
