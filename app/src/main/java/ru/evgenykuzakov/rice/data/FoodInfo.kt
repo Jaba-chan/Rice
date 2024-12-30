@@ -14,10 +14,10 @@ data class FoodInfo(
     @ColumnInfo(name = "extra_info") val extraInfo: String?,                // описание товара
     @ColumnInfo(name = "number_of_servings") val numberOfServings: Int?,    // количество порций
     @ColumnInfo(name = "source") val source: String,                        // откуда спарсил \ ресурс
-    @ColumnInfo(name = "net_weight") val netWeight: Double,                 // нетто вес(без упаковки)
+    @ColumnInfo(name = "net_weight") val netWeight: Float,                  // нетто вес(без упаковки)
     @ColumnInfo(name = "calories") val calories: Int?,                      // калории
-    @ColumnInfo(name = "protein") val protein: Double,                      // белок
-    @ColumnInfo(name = "carbohydrates") val carbohydrates: Double,          // углеводы
-    @ColumnInfo(name = "fats") val fats: Double                             // жиры
+    @ColumnInfo(name = "protein") val protein: Float,                       // белок
+    @ColumnInfo(name = "carbohydrates") val carbohydrates: Float,           // углеводы
+    @ColumnInfo(name = "fats") val fats: Float                              // жиры
 )
 

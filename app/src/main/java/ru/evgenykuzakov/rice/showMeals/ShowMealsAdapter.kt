@@ -16,6 +16,7 @@ class ShowMealsAdapter:
     companion object {
         val VIEW_TYPE_MEAL = 1
         val VIEW_TYPE_HEADING = 2
+        val VIEW_TYPE_FOTTER = 3
     }
     private var items: MutableList<Any>? = mutableListOf()
     fun setMeals(items: MutableList<Any>?) {
@@ -48,6 +49,13 @@ class ShowMealsAdapter:
         }
     }
 
+    class FooterHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val tvCalories = itemView.findViewById<TextView>(R.id.tvCalories)
+        val tvProtein = itemView.findViewById<TextView>(R.id.tvProtein)
+        val tvFats = itemView.findViewById<TextView>(R.id.tvFats)
+        val tvCarbohydrates = itemView.findViewById<TextView>(R.id.tvCarbohydrates)
+    }
+
     override fun getItemViewType(position: Int): Int {
         return when (items?.get(position)) {
             is MealsTest -> VIEW_TYPE_MEAL
@@ -70,6 +78,11 @@ class ShowMealsAdapter:
                 HeadingHolder(view)
             }
 
+            VIEW_TYPE_FOTTER -> {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.nutrients_footer , parent, false)
+                FooterHolder(view)
+            }
             else -> throw IllegalArgumentException("Unknown view type")
         }
     }
@@ -91,6 +104,9 @@ class ShowMealsAdapter:
                     DatabaseNamesEnum.DINNER_DATABASE -> holder.ivHeadingOfMeal.setImageResource(R.drawable.dinner_heading_icon)
                     DatabaseNamesEnum.EXTRA_MEALS_DATABASE -> holder.ivHeadingOfMeal.setImageResource(R.drawable.extra_meals_heading_icon)
                 }
+            }
+            is FooterHolder -> {
+
             }
         }
     }

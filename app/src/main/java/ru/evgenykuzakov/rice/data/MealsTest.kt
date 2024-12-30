@@ -14,7 +14,7 @@ data class MealsTest(
     @ColumnInfo(name = "position") val position: Int,
     @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "calories") val calories: Int?,
-    @ColumnInfo(name = "protein") val protein: Double,
-    @ColumnInfo(name = "carbohydrates") val carbohydrates: Double,
-    @ColumnInfo(name = "fats") val fats: Double
+    @ColumnInfo(name = "protein") val protein: Float,
+    @ColumnInfo(name = "carbohydrates") val carbohydrates: Float,
+    @ColumnInfo(name = "fats") val fats: Float
 )

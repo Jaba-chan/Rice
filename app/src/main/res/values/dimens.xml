@@ -58,4 +58,5 @@
     <dimen name="nutrients_container_corners_radius">5dp</dimen>
     <dimen name="margin_vertical_nutrients_container">10dp</dimen>
     <dimen name="margin_horizontal_heading_icon">10dp</dimen>
+    <dimen name="margin_bottom_add_meal_rv">50dp</dimen>
 </resources>

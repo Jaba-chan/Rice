@@ -1,6 +1,6 @@
 package ru.evgenykuzakov.rice.data
 
-enum class MeasurementEnum(val amount: Double) {
-     MEASUREMENT_GRAM(100.0),
-     MEASUREMENT_PORTION(1.0)
+enum class MeasurementEnum(val amount: Float) {
+     MEASUREMENT_GRAM(100f),
+     MEASUREMENT_PORTION(1f)
 }

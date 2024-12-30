@@ -1,6 +1,7 @@
 package ru.evgenykuzakov.rice.addMeals
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import ru.evgenykuzakov.rice.data.FoodInfo
 import ru.evgenykuzakov.rice.R
+import ru.evgenykuzakov.rice.data.MealsTest
 import ru.evgenykuzakov.rice.data.MeasurementEnum
+import java.lang.Math.round
 
 class AddFoodRecyclerViewAdapter(
     private var context: Context, private var items: List<FoodInfo>,
@@ -25,25 +28,27 @@ class AddFoodRecyclerViewAdapter(
 ) :
     RecyclerView.Adapter<AddFoodRecyclerViewAdapter.MealHolder>() {
     interface OnItemClickListener {
-        fun onItemClick(position: Int, amount: Int, amountMultiplayer: Double)
+        fun onItemClick(position: Int, amount: Int, amountMultiplayer: Float)
     }
 
     inner class MealHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var isExpanded: Boolean
         var chosenMeasurement: MeasurementEnum
         val defaultMeasurementArray: Array<String>
-        private val llExtra: LinearLayout
-        private val clHeadingContainer: ConstraintLayout
+        val edAmount: TextInputLayout
+        val acvAmount: AutoCompleteTextView
         val btAddToMeals: Button
         val tvFoodName: TextView
         val acvMeasurement: AutoCompleteTextView
+        val tvCalories: TextView
+        val tvCarbohydrates: TextView
+        val tvFats: TextView
+        val tvProtein: TextView
+        private val llExtra: LinearLayout
+        private val clHeadingContainer: ConstraintLayout
         private val ivExpanding: ImageView
         private val edMeasurement: TextInputLayout
-        val edAmount: TextInputLayout
-        val acvAmount: AutoCompleteTextView
 
         init {
-            isExpanded = false
             chosenMeasurement = MeasurementEnum.MEASUREMENT_GRAM
             defaultMeasurementArray =
                 context.resources.getStringArray(R.array.default_measurement_amount)
@@ -56,7 +61,11 @@ class AddFoodRecyclerViewAdapter(
             edMeasurement = itemView.findViewById(R.id.edMeasurement)
             edAmount = itemView.findViewById(R.id.edAmount)
             acvAmount = itemView.findViewById(R.id.acvAmount)
-            edAmount.editText?.setText(defaultMeasurementArray[chosenMeasurement.ordinal])
+            tvCalories = itemView.findViewById(R.id.tvCalories)
+            tvCarbohydrates = itemView.findViewById(R.id.tvCarbohydrates)
+            tvFats = itemView.findViewById(R.id.tvFats)
+            tvProtein = itemView.findViewById(R.id.tvProtein)
+
 
             btAddToMeals.setOnClickListener {
                 val position = adapterPosition
@@ -75,18 +84,17 @@ class AddFoodRecyclerViewAdapter(
                 }
             }
             ivExpanding.setOnClickListener {
-                if (isExpanded) {
+                if (llExtra.visibility == View.VISIBLE) {
                     llExtra.visibility = View.GONE
                     ivExpanding.setImageResource(R.drawable.expand_down_icon)
-                    isExpanded = false
                 } else {
                     llExtra.visibility = View.VISIBLE
                     ivExpanding.setImageResource(R.drawable.expand_up_icon)
-                    isExpanded = true
                 }
             }
         }
     }
+
 
     fun setData(newData: List<FoodInfo>) {
         items = newData
@@ -107,68 +115,94 @@ class AddFoodRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: MealHolder, position: Int) {
+        fun setNutrients(item: FoodInfo, amountMultiplayer: Float){
+            holder.tvCarbohydrates.text = String.format(
+                context.getString(R.string.pattern_gram),
+                (item.carbohydrates * amountMultiplayer))
+            holder.tvProtein.text = String.format(
+                context.getString(R.string.pattern_gram),
+                (item.protein * amountMultiplayer))
+            holder.tvFats.text = String.format(
+                context.getString(R.string.pattern_gram),
+                (item.fats * amountMultiplayer))
+            holder.tvCalories.text = round((item.calories ?: 0) * amountMultiplayer).toString()
+        }
         val item = items[position]
         holder.tvFoodName.text = item.name
-
+        holder.acvAmount.setText(
+            holder.defaultMeasurementArray[holder.chosenMeasurement.ordinal])
         val acvAdapterItems = context.resources.getStringArray(R.array.measurement)
         val adapter =
             ArrayAdapter(context, android.R.layout.simple_dropdown_item_1line, acvAdapterItems)
         holder.acvMeasurement.setAdapter(adapter)
         holder.acvMeasurement.setText(acvAdapterItems[0], false)
-        var isDropdownShown = false
         var isAmountEditTextFocused = false
+        val text = holder.acvAmount.text
+        val amount = when(text.isNotEmpty()){
+                true -> text.toString().toInt()
+                false -> 0
+        }
+        val amountMultiplayer = getAmountMultiplayer(
+            item.netWeight,
+            item.numberOfServings ?: 0,
+            amount,
+            holder.chosenMeasurement)
+        setNutrients(item, amountMultiplayer)
 
         holder.acvMeasurement.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 holder.acvMeasurement.showDropDown()
-                isDropdownShown = true
             } else {
                 holder.acvMeasurement.dismissDropDown()
-                isDropdownShown = false
             }
         }
         holder.acvMeasurement.setOnClickListener {
-            if (isDropdownShown) {
+            if (holder.acvMeasurement.isShown) {
                 holder.acvMeasurement.dismissDropDown()
                 holder.acvMeasurement.clearFocus()
-                isDropdownShown = false
             } else {
                 holder.acvMeasurement.showDropDown()
-                isDropdownShown = true
             }
-            isDropdownShown = !isDropdownShown
         }
-        holder.acvMeasurement.setOnItemClickListener { _, _, position, _ ->
-            holder.chosenMeasurement = when(position){
+        holder.acvMeasurement.setOnItemClickListener { _, _, pos, _ ->
+            holder.chosenMeasurement = when(pos){
                 0 -> MeasurementEnum.MEASUREMENT_GRAM
                 1 -> MeasurementEnum.MEASUREMENT_PORTION
                 else -> {throw Exception("Undefined measurement")}
             }
             holder.acvMeasurement.dismissDropDown()
             holder.acvMeasurement.clearFocus()
-            holder.edAmount.editText?.setText(holder.defaultMeasurementArray[position])
-            isDropdownShown = false
+            holder.edAmount.editText?.setText(holder.defaultMeasurementArray[pos])
         }
 
         holder.acvAmount.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                isAmountEditTextFocused = true
-            } else {
-                isAmountEditTextFocused = false
+            if (!hasFocus) {
                 val inputMethodManager =
                     context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(holder.edAmount.windowToken, 0)
             }
         }
         holder.acvAmount.setOnClickListener {
-            isAmountEditTextFocused = !isAmountEditTextFocused
-            if (!isAmountEditTextFocused) {
+            if (holder.acvAmount.isFocused) {
                 holder.acvAmount.clearFocus()
             }
         }
-        holder.acvAmount.doAfterTextChanged {
-            holder.btAddToMeals.isEnabled = checkAmountCorrectness(holder.acvAmount.text.toString())
+        holder.acvAmount.doAfterTextChanged { text ->
+            val amount = when(text?.isNotEmpty()){
+                true -> text.toString().toInt()
+                false -> 0
+                null -> 0
+            }
+            val amountMultiplayer = getAmountMultiplayer(
+                item.netWeight,
+                item.numberOfServings ?: 0,
+                amount,
+                holder.chosenMeasurement)
+            holder.btAddToMeals.isEnabled = checkAmountCorrectness(
+                holder.acvAmount.text.toString())
+                setNutrients(item, amountMultiplayer)
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -183,15 +217,15 @@ class AddFoodRecyclerViewAdapter(
         }
     }
     private fun getAmountMultiplayer(
-        weight: Double,
+        weight: Float,
         numberOfServings: Int,
         amount: Int,
-        measurement: MeasurementEnum): Double {
+        measurement: MeasurementEnum): Float {
         return when(measurement){
             MeasurementEnum.MEASUREMENT_PORTION ->
-               weight * amount / numberOfServings
+                (weight * 10) * amount / numberOfServings
             MeasurementEnum.MEASUREMENT_GRAM ->
-               amount / MeasurementEnum.MEASUREMENT_GRAM.amount
+               amount.toFloat() / MeasurementEnum.MEASUREMENT_GRAM.amount
         }
     }
 

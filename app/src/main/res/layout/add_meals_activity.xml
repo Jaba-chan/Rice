@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".addMeals.AddMealsActivity">
 
+    <ProgressBar
+        android:id="@+id/pbWaitFoodData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"
+        android:indeterminateTint="?colorPrimary">
+    </ProgressBar>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clHead"
         android:layout_width="match_parent"
@@ -18,50 +32,49 @@
             android:id="@+id/btBackToMeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_start_back_to_show_meals_button"
+            android:backgroundTint="?android:windowBackground"
             android:contentDescription="@string/description_back_button_icon"
             android:src="@drawable/arrow_back_icon"
-            android:backgroundTint="?android:windowBackground"
-            android:layout_marginStart="@dimen/margin_start_back_to_show_meals_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/spChooseMeals">
-        </ImageButton>
+            app:layout_constraintEnd_toStartOf="@id/spChooseMeals"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/spChooseMeals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_start_spinner_choose_meals"
-            app:layout_constraintTop_toTopOf="parent"
+            app:endIconMode="dropdown_menu"
+            app:endIconTint="?colorSecondary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btBackToMeals"
-            app:endIconMode="dropdown_menu"
-            app:endIconTint="?colorSecondary">
+            app:layout_constraintTop_toTopOf="parent">
 
             <AutoCompleteTextView
-                style="@style/chooseMealDropDownStyle"
                 android:id="@+id/acvChooseMeals"
-                android:labelFor="@id/spChooseMeals"
-                android:background="?android:windowBackground"
+                style="@style/chooseMealDropDownStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?android:windowBackground"
                 android:inputType="none"
+                android:labelFor="@id/spChooseMeals"
                 tools:text="Завтрак" />
         </com.google.android.material.textfield.TextInputLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_horizontal_search_field"
+        app:cardCornerRadius="@dimen/searchFieldRadius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clHead"
-        app:cardCornerRadius="@dimen/searchFieldRadius"
-        app:strokeWidth="@dimen/search_field_border_width"
-        app:strokeColor="@color/search_field_stroke_color">
+        app:strokeColor="@color/search_field_stroke_color"
+        app:strokeWidth="@dimen/search_field_border_width">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -72,45 +85,42 @@
                 android:id="@+id/ivSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_start_image_in_search_field"
                 android:contentDescription="@string/description_search_icon"
                 android:src="@drawable/search_icon"
-                android:layout_marginStart="@dimen/margin_start_image_in_search_field"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/edSearch"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-            </ImageView>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <EditText
-                style="@style/searchFieldStyle"
                 android:id="@+id/edSearch"
+                style="@style/searchFieldStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:layout_marginStart="@dimen/margin_start_search_text_field"
                 android:layout_marginEnd="@dimen/margin_end_search_text_field"
                 android:background="@null"
+                android:hint="@string/search_hint"
+                android:inputType="text"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/ibClear"
                 app:layout_constraintStart_toEndOf="@id/ivSearch"
-                app:layout_constraintTop_toTopOf="parent"
-                android:hint="@string/search_hint"
-                android:textSize="16sp">
-            </EditText>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/ibClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_end_clear_bt"
-                android:src="@drawable/close_icon"
                 android:background="?colorSurfaceContainer"
-                android:visibility="gone"
                 android:contentDescription="@string/description_clear_search_field_icon"
-                app:layout_constraintStart_toEndOf="@id/edSearch"
+                android:src="@drawable/close_icon"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-            </ImageButton>
+                app:layout_constraintStart_toEndOf="@id/edSearch"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -119,22 +129,21 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="@dimen/margin_top_separator"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cvSearch"
+        android:background="?android:textColorSecondary"
         app:layout_constraintBottom_toTopOf="@id/rvAddMeals"
-        android:background="?android:textColorSecondary">
-    </View>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cvSearch" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAddMeals"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_bottom_add_meal_rv"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separatorView">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@id/separatorView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

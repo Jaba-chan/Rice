@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import ru.evgenykuzakov.rice.data.FoodInfo
 import ru.evgenykuzakov.rice.databases.DAO.FoodDAO
 
-@Database(entities = [FoodInfo::class], version = 4)
+@Database(entities = [FoodInfo::class], version = 5)
 abstract class FoodInfoDatabase : RoomDatabase() {
     abstract fun foodDao(): FoodDAO
     companion object {

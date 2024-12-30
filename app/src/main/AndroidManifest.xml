@@ -15,7 +15,7 @@
         <activity
             android:name=".addMeals.AddMealsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustPan"
         />
         <activity
             android:name=".MainActivity"

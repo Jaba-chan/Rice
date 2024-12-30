@@ -17,7 +17,8 @@
     <string name="protein">Белки</string>
     <string name="fats">Жиры</string>
     <string name="carbohydrates">Углеводы</string>
-    <string name="pattern_gramm">г</string>
+    <string name="pattern_gram">%.1f г</string>
+    <string name="pattern_calories">%d</string>
 
     <string name="description_breakfast_icon">Breakfast icon</string>
     <string name="description_amount_of_product_icon">Amount of product</string>

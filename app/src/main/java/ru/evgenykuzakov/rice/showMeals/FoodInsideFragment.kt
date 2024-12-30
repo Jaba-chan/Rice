@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,13 +48,10 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
         super.onViewCreated(view, savedInstanceState)
         val rvMain = view.findViewById<RecyclerView>(R.id.rvMain)
         val fabAdd = view.findViewById<FloatingActionButton>(R.id.fabAdd)
-        val tvCalories = view.findViewById<TextView>(R.id.tvCalories)
-        val tvProtein = view.findViewById<TextView>(R.id.tvProtein)
-        val tvFats = view.findViewById<TextView>(R.id.tvFats)
-        val tvCarbohydrates = view.findViewById<TextView>(R.id.tvCarbohydrates)
+        val pbWaitForMealsData = view.findViewById<ProgressBar>(R.id.pbWaitForMealsData)
 
+        pbWaitForMealsData.visibility = View.VISIBLE
         model = ViewModelProvider(this)[ShowMealsViewModel::class.java]
-        val foodInsideViewModel = ViewModelProvider(requireActivity())[FoodInsideViewModel::class.java]
         model.setDate(getDate(date))
         model.refreshList()
         val adapter = ShowMealsAdapter()
@@ -61,12 +59,13 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
 
 
         model.getMeals().observe(viewLifecycleOwner) {
-            foodInsideViewModel.setWasChanged(!foodInsideViewModel.getWasChanged().value!!)
             CoroutineScope(Dispatchers.Main).launch {
                 adapter.setMeals(model.getMeals().value?.toMutableList())
+                withContext(Dispatchers.Main){
+                    pbWaitForMealsData.visibility = View.GONE
+                }
             }
         }
-
         rvMain.adapter = adapter
         rvMain.overScrollMode = View.OVER_SCROLL_NEVER
 
@@ -75,7 +74,7 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
             ): Int {
-                val pos = viewHolder.adapterPosition
+                val pos = viewHolder.absoluteAdapterPosition
                 val viewType = adapter.getItemViewType(pos)
 
                 return if (viewType == ShowMealsAdapter.VIEW_TYPE_MEAL) {
@@ -94,8 +93,8 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                val toPos = target.adapterPosition
-                val fromPos = viewHolder.adapterPosition
+                val toPos = target.absoluteAdapterPosition
+                val fromPos = viewHolder.absoluteAdapterPosition
                 if (toPos > 0 && toPos <= adapter.itemCount) {
                     val item = adapter.getMeals()?.removeAt(fromPos)
                     if (item != null){
@@ -133,7 +132,7 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
                     .create()
                     .decorate()
 
-                val position = viewHolder.adapterPosition
+                val position = viewHolder.absoluteAdapterPosition
                 val itemCount = recyclerView.adapter?.itemCount ?: 0
                 val newDY = when {
                     position <= 1 -> Math.max(dY, 0f)
@@ -151,7 +150,7 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val pos = viewHolder.adapterPosition
+                val pos = viewHolder.absoluteAdapterPosition
                 val item = adapter.getMeals()?.removeAt(pos)
                 adapter.notifyItemRemoved(pos)
                 model.remove((item as MealsTest).id)

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
@@ -72,6 +73,7 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
         val cvSearch = findViewById<MaterialCardView>(R.id.cvSearch)
         val ibClear = findViewById<ImageButton>(R.id.ibClear)
         val btBackToMeals = findViewById<ImageButton>(R.id.btBackToMeals)
+        val pbWaitFoodData = findViewById<ProgressBar>(R.id.pbWaitFoodData)
 
         date = intent.getStringExtra(DATE) ?: ""
         adapter = AddFoodRecyclerViewAdapter(this, emptyList(), this)
@@ -108,6 +110,7 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
         }
 
         edSearch.doAfterTextChanged {
+            pbWaitFoodData.visibility = View.VISIBLE
             CoroutineScope(Dispatchers.IO).launch {
                 val query = edSearch.text.toString()
                 val data = if (query.isNotBlank()) {
@@ -119,6 +122,7 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
                     if (rvAddMeals.adapter != null) {
                         val newAdapter = (rvAddMeals.adapter as AddFoodRecyclerViewAdapter)
                         newAdapter.setData(data)
+                        pbWaitFoodData.visibility = View.GONE
                     }
                 }
             }
@@ -139,7 +143,7 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
         }
     }
 
-    override fun onItemClick(position: Int, amount: Int, amountMultiplayer: Double) {
+    override fun onItemClick(position: Int, amount: Int, amountMultiplayer: Float) {
         val data = adapter.getData()[position]
 
         val pos = when(chosenMeal){
@@ -161,22 +165,6 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
         val intent = Intent()
         setResult(Activity.RESULT_OK, intent)
         finish()
-    }
-
-    private fun getNutrientsByWeight(weight: Double, measurement: MeasurementEnum, meal: Nutrients): Nutrients{
-
-        return when(measurement){
-            MeasurementEnum.MEASUREMENT_PORTION -> Nutrients(
-                round(meal.calories.toDouble() * weight / MeasurementEnum.MEASUREMENT_PORTION.amount).toInt(),
-                meal.protein * weight / MeasurementEnum.MEASUREMENT_PORTION.amount,
-                meal.fats * weight / MeasurementEnum.MEASUREMENT_PORTION.amount,
-                meal.carbohydrates * weight / MeasurementEnum.MEASUREMENT_PORTION.amount)
-            MeasurementEnum.MEASUREMENT_GRAM -> Nutrients(
-                round(meal.calories.toDouble() * weight / MeasurementEnum.MEASUREMENT_PORTION.amount).toInt(),
-                meal.protein * weight / MeasurementEnum.MEASUREMENT_PORTION.amount,
-                meal.fats * weight / MeasurementEnum.MEASUREMENT_PORTION.amount,
-                meal.carbohydrates * weight / MeasurementEnum.MEASUREMENT_PORTION.amount)
-        }
     }
 
 }
