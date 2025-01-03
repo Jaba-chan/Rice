@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "meals")
 data class MealsTest(
-    @PrimaryKey(autoGenerate = true) var id: Int = 0,
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "parentId") val parentId: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "amount") val amount: Int,

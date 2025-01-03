@@ -35,10 +35,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/ivHeadingOfMeal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivHeadingExpanding"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Завтрак">
         </TextView>
+
+        <ImageView
+            android:id="@+id/ivHeadingExpanding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_horizontal_heading_icon"
+            android:contentDescription="@string/description_hiding_add_option_icon"
+            android:src="@drawable/expand_up_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvHeadingOfMeal"
+            app:layout_constraintTop_toTopOf="parent">
+        </ImageView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

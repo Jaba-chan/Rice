@@ -30,14 +30,14 @@
                 android:layout_marginVertical="@dimen/margin_vertical_heading_add_meals"
                 android:layout_marginStart="@dimen/margin_start_add_meal_items_heading"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivExpanding"
+                app:layout_constraintEnd_toStartOf="@id/ivHeadingExpanding"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Молоко">
             </TextView>
 
             <ImageView
-                android:id="@+id/ivExpanding"
+                android:id="@+id/ivHeadingExpanding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_top_iv_expanding"

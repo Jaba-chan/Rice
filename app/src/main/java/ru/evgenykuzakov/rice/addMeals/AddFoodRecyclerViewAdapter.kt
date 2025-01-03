@@ -1,7 +1,6 @@
 package ru.evgenykuzakov.rice.addMeals
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
 import ru.evgenykuzakov.rice.data.FoodInfo
 import ru.evgenykuzakov.rice.R
-import ru.evgenykuzakov.rice.data.MealsTest
 import ru.evgenykuzakov.rice.data.MeasurementEnum
 import java.lang.Math.round
 
@@ -54,7 +52,7 @@ class AddFoodRecyclerViewAdapter(
                 context.resources.getStringArray(R.array.default_measurement_amount)
             tvFoodName = itemView.findViewById(R.id.tvFoodName)
             btAddToMeals = itemView.findViewById(R.id.btAddToMeals)
-            ivExpanding = itemView.findViewById(R.id.ivExpanding)
+            ivExpanding = itemView.findViewById(R.id.ivHeadingExpanding)
             llExtra = itemView.findViewById(R.id.llExtra)
             clHeadingContainer = itemView.findViewById(R.id.clHeadingContainer)
             acvMeasurement = itemView.findViewById(R.id.acvMeasurement)

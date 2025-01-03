@@ -21,29 +21,21 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
     private var nutrients: MutableLiveData<Nutrients?> = MutableLiveData()
     private lateinit var date: String
 
-    private val breakfastHeading = listOf(
-        Heading(
+    private var breakfastHeading = Heading(
             application.resources.getStringArray(R.array.meals)[0],
             DatabaseNamesEnum.BREAKFAST_DATABASE
-        )
     )
-    private val lunchHeading = listOf(
-        Heading(
+    private var lunchHeading = Heading(
             application.resources.getStringArray(R.array.meals)[1],
             DatabaseNamesEnum.LUNCH_DATABASE
-        )
     )
-    private val dinnerHeading = listOf(
-        Heading(
+    private var dinnerHeading = Heading(
             application.resources.getStringArray(R.array.meals)[2],
             DatabaseNamesEnum.DINNER_DATABASE
-        )
     )
-    private val extraMealsHeading = listOf(
-        Heading(
+    private var extraMealsHeading = Heading(
             application.resources.getStringArray(R.array.meals)[3],
             DatabaseNamesEnum.EXTRA_MEALS_DATABASE
-        )
     )
 
     private suspend fun getBreakfastMeals(): List<MealsTest> {
@@ -107,12 +99,12 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun refreshList() {
         CoroutineScope(Dispatchers.IO).launch {
-            meals.postValue(
-                (breakfastHeading + getBreakfastMeals()
-                        + lunchHeading + getLunchMeals()
-                        + dinnerHeading + getDinnerMeals()
-                        + extraMealsHeading + getExtraMeals()).toMutableList()
-            )
+            meals.postValue((
+                          listOf(breakfastHeading) + getBreakfastMeals()
+                        + listOf(lunchHeading) + getLunchMeals()
+                        + listOf(dinnerHeading) + getDinnerMeals()
+                        + listOf(extraMealsHeading) + getExtraMeals())
+                .toMutableList())
             nutrients.postValue(mealsDatabase!!.mealsDao().getNutrients(date))
         }
     }
@@ -137,7 +129,7 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
             while (i < (meals?.size ?: 0)) {
                 val item = meals?.get(i)
                 if (item is Heading) {
-                    headind = item.DB_NAme
+                    headind = item.dbName
                     j = 1
                 }
                 if (item is MealsTest) {
