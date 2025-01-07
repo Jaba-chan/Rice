@@ -82,8 +82,8 @@ class AddMealsActivity: AppCompatActivity(), AddFoodRecyclerViewAdapter.OnItemCl
 
 
         addMealsViewModel = ViewModelProvider(this)[AddMealsViewModel::class.java]
-        showMealsViewModel = ViewModelProvider(this)[ShowMealsViewModel::class.java]
-        showMealsViewModel.setDate(date)
+        showMealsViewModel = ViewModelProvider(this, ShowMealsViewModel.ShowMealsViewModelFactory(date, application)).get(ShowMealsViewModel::class.java)
+
 
         val items = resources.getStringArray(R.array.meals)
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, items)

@@ -4,6 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,25 +18,48 @@ import ru.evgenykuzakov.rice.data.MealsTest
 import ru.evgenykuzakov.rice.data.Nutrients
 import ru.evgenykuzakov.rice.databases.MealsDatabase
 
-class ShowMealsViewModel(application: Application) : AndroidViewModel(application) {
+class ShowMealsViewModel(val date: String, application: Application) : AndroidViewModel(application) {
+    class ShowMealsViewModelFactory(
+        private val date: String,
+        private val application: Application
+    ) : ViewModelProvider.AndroidViewModelFactory(application) {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(ShowMealsViewModel::class.java)) {
+                return ShowMealsViewModel(date, application) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
     private val mealsDatabase = MealsDatabase.getAppDatabase(application)
-    private var meals: MutableLiveData<MutableList<Any>?> = MutableLiveData()
+    private val meals: MutableLiveData<MutableList<Any>?> = MutableLiveData()
     private var nutrients: MutableLiveData<Nutrients?> = MutableLiveData()
-    private lateinit var date: String
+    private val _bannedPos = MutableLiveData<MutableList<Int>>(mutableListOf())
+    val bannedPos: LiveData<MutableList<Int>> get() = _bannedPos
 
-    private var breakfastHeading = Heading(
+    fun addBannedPos(item: Int) {
+        val currentList = _bannedPos.value ?: mutableListOf()
+        currentList.add(item)
+        _bannedPos.value = currentList
+    }
+
+    fun removeBannedPos(item: Int) {
+        val currentList = _bannedPos.value ?: mutableListOf()
+        currentList.remove(item)
+        _bannedPos.value = currentList
+    }
+    var breakfastHeading = Heading(
             application.resources.getStringArray(R.array.meals)[0],
             DatabaseNamesEnum.BREAKFAST_DATABASE
     )
-    private var lunchHeading = Heading(
+    var lunchHeading = Heading(
             application.resources.getStringArray(R.array.meals)[1],
             DatabaseNamesEnum.LUNCH_DATABASE
     )
-    private var dinnerHeading = Heading(
+    var dinnerHeading = Heading(
             application.resources.getStringArray(R.array.meals)[2],
             DatabaseNamesEnum.DINNER_DATABASE
     )
-    private var extraMealsHeading = Heading(
+    var extraMealsHeading = Heading(
             application.resources.getStringArray(R.array.meals)[3],
             DatabaseNamesEnum.EXTRA_MEALS_DATABASE
     )
@@ -92,20 +118,16 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
     fun getNutrients(): LiveData<Nutrients?>{
         return nutrients
     }
-    fun setDate(date: String){
-        this.date = date
-    }
+
 
 
     fun refreshList() {
-        CoroutineScope(Dispatchers.IO).launch {
-            meals.postValue((
-                          listOf(breakfastHeading) + getBreakfastMeals()
+        viewModelScope.launch {
+            meals.value = (listOf(breakfastHeading) + getBreakfastMeals()
                         + listOf(lunchHeading) + getLunchMeals()
                         + listOf(dinnerHeading) + getDinnerMeals()
                         + listOf(extraMealsHeading) + getExtraMeals())
-                .toMutableList())
-            nutrients.postValue(mealsDatabase!!.mealsDao().getNutrients(date))
+                        .toMutableList()
         }
     }
 
@@ -116,13 +138,13 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun insert(meal: MealsTest){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             mealsDatabase!!.mealsDao().insert(meal)
         }
     }
 
     fun update(meals: MutableList<Any>?) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             var i = 0
             var j = 1
             var headind = DatabaseNamesEnum.LUNCH_DATABASE
@@ -137,7 +159,6 @@ class ShowMealsViewModel(application: Application) : AndroidViewModel(applicatio
                     j++
                 }
                 i++
-
             }
         }
     }

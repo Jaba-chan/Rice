@@ -20,6 +20,7 @@ class ShowMealsAdapter:
         val VIEW_TYPE_HEADING = 2
         val VIEW_TYPE_FOTTER = 3
     }
+    var bannedPos: MutableList<Int> = mutableListOf()
     private var items: MutableList<Any>? = mutableListOf()
     private var onHeadingClickListener: ((Boolean, DatabaseNamesEnum, Int) -> Unit)? = null
     fun setOnHeadingClickListener(f: (Boolean, DatabaseNamesEnum, Int) -> Unit) {
@@ -92,11 +93,12 @@ class ShowMealsAdapter:
                     val pos = holder.adapterPosition
                     if (pos != NO_POSITION) {
                         val item = (items?.get(pos) as Heading)
-                        item.isExpanded = !item.isExpanded
-                        if (item.isExpanded){
+                        if (!item.isExpanded){
                             holder.ivHeadingExpanding.setImageResource(R.drawable.expand_up_icon)
+                            bannedPos.remove(pos)
                         } else {
                             holder.ivHeadingExpanding.setImageResource(R.drawable.expand_down_icon)
+                            bannedPos.add(pos)
                         }
                         onHeadingClickListener?.invoke(item.isExpanded,(items?.get(pos) as Heading).dbName, pos)
                     }

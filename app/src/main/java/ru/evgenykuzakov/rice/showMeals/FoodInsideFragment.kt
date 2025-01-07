@@ -51,46 +51,53 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
         val pbWaitForMealsData = view.findViewById<ProgressBar>(R.id.pbWaitForMealsData)
 
         pbWaitForMealsData.visibility = View.VISIBLE
-        model = ViewModelProvider(this)[ShowMealsViewModel::class.java]
-        model.setDate(getDate(date))
+        model = ViewModelProvider(this,
+            ShowMealsViewModel.ShowMealsViewModelFactory(
+                getDate(date),
+                requireActivity().application))[ShowMealsViewModel::class.java]
         model.refreshList()
         val adapter = ShowMealsAdapter()
 
         adapter.setOnHeadingClickListener { isExpanded, database, startPos ->
-
             CoroutineScope(Dispatchers.IO).launch {
                 val itemCount = getItemCount(database)
                 withContext(Dispatchers.Main) {
-                    if (isExpanded) {
+                    when(database){
+                        DatabaseNamesEnum.BREAKFAST_DATABASE ->
+                            model.breakfastHeading.isExpanded = !model.breakfastHeading.isExpanded
+                        DatabaseNamesEnum.LUNCH_DATABASE ->
+                            model.lunchHeading.isExpanded = !model.lunchHeading.isExpanded
+                        DatabaseNamesEnum.DINNER_DATABASE ->
+                            model.dinnerHeading.isExpanded = !model.dinnerHeading.isExpanded
+                        DatabaseNamesEnum.EXTRA_MEALS_DATABASE ->
+                            model.extraMealsHeading.isExpanded = !model.extraMealsHeading.isExpanded
+                    }
+                    if (!isExpanded) {
+                        model.refreshList()
                         adapter.setMeals(model.getMeals().value)
                         adapter.notifyItemRangeInserted(startPos + 1, itemCount)
+                        model.removeBannedPos(startPos)
                     } else {
                         val updatedList = adapter.getMeals()!!.toMutableList()
                         updatedList.subList(startPos + 1, startPos + 1 + itemCount).clear()
                         adapter.setMeals(updatedList)
                         adapter.notifyItemRangeRemoved(startPos + 1, itemCount)
+                        model.addBannedPos(startPos)
                     }
                 }
             }
         }
 
 
-        model.getMeals().observe(viewLifecycleOwner)
-        {
-            CoroutineScope(Dispatchers.Main).launch {
-                adapter.setMeals(model.getMeals().value?.toMutableList())
-                withContext(Dispatchers.Main) {
-                    pbWaitForMealsData.visibility = View.GONE
-                }
-            }
+        model.getMeals().observe(viewLifecycleOwner) {meals ->
+            adapter.setMeals(meals)
+            pbWaitForMealsData.visibility = View.GONE
         }
+
         rvMain.adapter = adapter
         rvMain.overScrollMode = View.OVER_SCROLL_NEVER
 
         val callback = object : ItemTouchHelper.Callback() {
-            private var longHoldTriggered: Boolean = false
-            private var longHoldHandler: Handler? = null
-            private var lastTarget: RecyclerView.ViewHolder? = null
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
@@ -116,6 +123,9 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
             ): Boolean {
                 val toPos = target.absoluteAdapterPosition
                 val fromPos = viewHolder.absoluteAdapterPosition
+                if (model.bannedPos.value?.contains(toPos) == true) {
+                    return true
+                }
                 if (toPos > 0 && toPos <= adapter.itemCount) {
                     val item = adapter.getMeals()?.removeAt(fromPos)
                     if (item != null) {
