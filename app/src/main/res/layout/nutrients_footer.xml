@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_top_nutrients_footer"
     android:rowCount="2"
     android:columnCount="2"
     app:layout_constraintStart_toStartOf="parent"
@@ -13,74 +14,74 @@
     app:layout_constraintBottom_toBottomOf="parent"
     >
 
-        <LinearLayout
-            style="@style/nutrientBlockLLStyle"
-            android:layout_marginEnd="@dimen/margin_line"
-            android:layout_marginBottom="@dimen/margin_line"
-            >
-            <TextView
-                style="@style/nutrientBlockHeadingStyle"
-                android:id="@+id/tvCaloriesHeading"
-                android:text="@string/calories">
-            </TextView>
-            <TextView
-                style="@style/nutrientBlockStyle"
-                android:id="@+id/tvCalories"
-                tools:text="1000">
-            </TextView>
-        </LinearLayout>
+    <LinearLayout
+        style="@style/nutrientBlockLLStyle"
+        android:layout_marginEnd="@dimen/margin_line"
+        android:layout_marginBottom="@dimen/margin_line"
+        >
+        <TextView
+            style="@style/nutrientBlockHeadingStyle"
+            android:id="@+id/tvCaloriesHeading"
+            android:text="@string/calories">
+        </TextView>
+        <TextView
+            style="@style/nutrientBlockStyle"
+            android:id="@+id/tvCalories"
+            tools:text="1000">
+        </TextView>
+    </LinearLayout>
 
-        <LinearLayout
-            style="@style/nutrientBlockLLStyle"
-            android:layout_marginStart="@dimen/margin_line"
-            android:layout_marginBottom="@dimen/margin_line"
-            >
-            <TextView
-                style="@style/nutrientBlockHeadingStyle"
-                android:id="@+id/tvProteinHeading"
-                android:text="@string/protein">
-            </TextView>
-            <TextView
-                style="@style/nutrientBlockStyle"
-                android:id="@+id/tvProtein"
-                tools:text="202">
-            </TextView>
-        </LinearLayout>
-
-
-        <LinearLayout
-            style="@style/nutrientBlockLLStyle"
-            android:layout_marginEnd="@dimen/margin_line"
-            android:layout_marginTop="@dimen/margin_line"
-            >
-            <TextView
-                style="@style/nutrientBlockHeadingStyle"
-                android:id="@+id/tvFatsHeading"
-                android:text="@string/fats">
-            </TextView>
-            <TextView
-                style="@style/nutrientBlockStyle"
-                android:id="@+id/tvFats"
-                tools:text="230">
-            </TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            style="@style/nutrientBlockLLStyle"
-            android:layout_marginStart="@dimen/margin_line"
-            android:layout_marginTop="@dimen/margin_line"
-            >
-            <TextView
-                style="@style/nutrientBlockHeadingStyle"
-                android:id="@+id/tvCarbohydratesHeading"
-                android:text="@string/carbohydrates">
-            </TextView>
-            <TextView
-                style="@style/nutrientBlockStyle"
-                android:id="@+id/tvCarbohydrates"
-                tools:text="82">
-            </TextView>
-        </LinearLayout>
+    <LinearLayout
+        style="@style/nutrientBlockLLStyle"
+        android:layout_marginStart="@dimen/margin_line"
+        android:layout_marginBottom="@dimen/margin_line"
+        >
+        <TextView
+            style="@style/nutrientBlockHeadingStyle"
+            android:id="@+id/tvProteinHeading"
+            android:text="@string/protein">
+        </TextView>
+        <TextView
+            style="@style/nutrientBlockStyle"
+            android:id="@+id/tvProtein"
+            tools:text="202">
+        </TextView>
+    </LinearLayout>
 
 
-    </GridLayout>
+    <LinearLayout
+        style="@style/nutrientBlockLLStyle"
+        android:layout_marginEnd="@dimen/margin_line"
+        android:layout_marginTop="@dimen/margin_line"
+        >
+        <TextView
+            style="@style/nutrientBlockHeadingStyle"
+            android:id="@+id/tvFatsHeading"
+            android:text="@string/fats">
+        </TextView>
+        <TextView
+            style="@style/nutrientBlockStyle"
+            android:id="@+id/tvFats"
+            tools:text="230">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/nutrientBlockLLStyle"
+        android:layout_marginStart="@dimen/margin_line"
+        android:layout_marginTop="@dimen/margin_line"
+        >
+        <TextView
+            style="@style/nutrientBlockHeadingStyle"
+            android:id="@+id/tvCarbohydratesHeading"
+            android:text="@string/carbohydrates">
+        </TextView>
+        <TextView
+            style="@style/nutrientBlockStyle"
+            android:id="@+id/tvCarbohydrates"
+            tools:text="82">
+        </TextView>
+    </LinearLayout>
+
+
+</GridLayout>

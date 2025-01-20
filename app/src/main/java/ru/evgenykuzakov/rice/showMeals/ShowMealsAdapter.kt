@@ -1,5 +1,6 @@
 package ru.evgenykuzakov.rice.showMeals
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,10 @@ import ru.evgenykuzakov.rice.R
 import ru.evgenykuzakov.rice.data.DatabaseNamesEnum
 import ru.evgenykuzakov.rice.data.Heading
 import ru.evgenykuzakov.rice.data.MealsTest
+import ru.evgenykuzakov.rice.data.Nutrients
+import java.lang.Math.round
 
-class ShowMealsAdapter:
+class ShowMealsAdapter(val context: Context):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         val VIEW_TYPE_MEAL = 1
@@ -73,6 +76,7 @@ class ShowMealsAdapter:
         return when (items?.get(position)) {
             is MealsTest -> VIEW_TYPE_MEAL
             is Heading -> VIEW_TYPE_HEADING
+            is Nutrients -> VIEW_TYPE_FOTTER
             else -> throw IllegalArgumentException("Unknown item type")
         }
     }
@@ -134,13 +138,29 @@ class ShowMealsAdapter:
                 }
             }
             is FooterHolder -> {
-
+                val item = items?.get(position) as Nutrients
+                holder.tvCarbohydrates.text = String.format(
+                    context.getString(R.string.pattern_gram),
+                    item.carbohydrates)
+                holder.tvProtein.text = String.format(
+                    context.getString(R.string.pattern_gram),
+                    item.protein)
+                holder.tvFats.text = String.format(
+                    context.getString(R.string.pattern_gram),
+                    item.fats)
+                holder.tvCalories.text = item.calories.toString()
             }
         }
     }
 
     override fun getItemCount(): Int {
         return items?.size ?: 0
+    }
+
+    fun getPositionsForViewType(): List<Int>? {
+        return items?.mapIndexedNotNull { index, _ ->
+            if (getItemViewType(index) == VIEW_TYPE_HEADING) index else null
+        }
     }
 
 }

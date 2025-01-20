@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -23,6 +24,7 @@ import ru.evgenykuzakov.rice.R
 import ru.evgenykuzakov.rice.RecyclerViewSwipeDecorator
 import ru.evgenykuzakov.rice.addMeals.AddMealsActivity
 import ru.evgenykuzakov.rice.data.DatabaseNamesEnum
+import ru.evgenykuzakov.rice.data.Heading
 import ru.evgenykuzakov.rice.data.MealsTest
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -56,11 +58,10 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
                 getDate(date),
                 requireActivity().application))[ShowMealsViewModel::class.java]
         model.refreshList()
-        val adapter = ShowMealsAdapter()
+        val adapter = ShowMealsAdapter(requireContext())
 
         adapter.setOnHeadingClickListener { isExpanded, database, startPos ->
             CoroutineScope(Dispatchers.IO).launch {
-                val itemCount = getItemCount(database)
                 withContext(Dispatchers.Main) {
                     when(database){
                         DatabaseNamesEnum.BREAKFAST_DATABASE ->
@@ -72,18 +73,9 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
                         DatabaseNamesEnum.EXTRA_MEALS_DATABASE ->
                             model.extraMealsHeading.isExpanded = !model.extraMealsHeading.isExpanded
                     }
-                    if (!isExpanded) {
-                        model.refreshList()
-                        adapter.setMeals(model.getMeals().value)
-                        adapter.notifyItemRangeInserted(startPos + 1, itemCount)
-                        model.removeBannedPos(startPos)
-                    } else {
-                        val updatedList = adapter.getMeals()!!.toMutableList()
-                        updatedList.subList(startPos + 1, startPos + 1 + itemCount).clear()
-                        adapter.setMeals(updatedList)
-                        adapter.notifyItemRangeRemoved(startPos + 1, itemCount)
-                        model.addBannedPos(startPos)
-                    }
+                    model.refreshList()
+                    adapter.notifyDataSetChanged()
+                    model.setBannedPos(adapter.getPositionsForViewType() ?: emptyList())
                 }
             }
         }
@@ -123,16 +115,26 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
             ): Boolean {
                 val toPos = target.absoluteAdapterPosition
                 val fromPos = viewHolder.absoluteAdapterPosition
-                if (model.bannedPos.value?.contains(toPos) == true) {
-                    return true
+                val checkedBannedItem = adapter.getMeals()?.get(toPos)
+                if (checkedBannedItem is Heading){
+                    if (toPos > fromPos){
+                        if (!checkedBannedItem.isExpanded) {
+                            return true
+                        }
+                    } else {
+                        if (model.bannedPos.value?.contains(toPos - 1) == true){
+                            return true
+                        }
+                    }
                 }
-                if (toPos > 0 && toPos <= adapter.itemCount) {
+                if (toPos > 0 && toPos <= adapter.itemCount - 2) {
                     val item = adapter.getMeals()?.removeAt(fromPos)
                     if (item != null) {
                         adapter.getMeals()?.add(toPos, item)
                     }
                     adapter.notifyItemMoved(fromPos, toPos)
                     model.update(adapter.getMeals())
+                    model.setBannedPos(adapter.getPositionsForViewType() ?: emptyList())
                     return true
                 }
                 return false
@@ -175,11 +177,13 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
 
                 val position = viewHolder.absoluteAdapterPosition
                 val itemCount = recyclerView.adapter?.itemCount ?: 0
+                val bottomLimit = recyclerView.findViewHolderForAdapterPosition(itemCount - 2)?.itemView?.bottom
+                    ?: recyclerView.height
                 val newDY = when {
                     position <= 1 -> Math.max(dY, 0f)
-                    position >= itemCount - 1 -> Math.min(
+                    position > 1 -> Math.min(
                         dY,
-                        (recyclerView.height - viewHolder.itemView.bottom).toFloat()
+                        (bottomLimit - viewHolder.itemView.bottom.toFloat())
                     )
 
                     else -> dY
@@ -193,8 +197,9 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val pos = viewHolder.absoluteAdapterPosition
                 val item = adapter.getMeals()?.removeAt(pos)
-                adapter.notifyItemRemoved(pos)
+                adapter.notifyDataSetChanged()
                 model.remove((item as MealsTest).id)
+                model.setBannedPos(adapter.getPositionsForViewType() ?: emptyList())
             }
         }
 
@@ -228,12 +233,4 @@ class FoodInsideFragment(private val date: Date) : Fragment(R.layout.food_inside
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
 
-    private suspend fun getItemCount(db: DatabaseNamesEnum): Int = withContext(Dispatchers.IO) {
-        return@withContext when (db) {
-            DatabaseNamesEnum.BREAKFAST_DATABASE -> model.getBreakfastLastPosition()
-            DatabaseNamesEnum.LUNCH_DATABASE -> model.getLunchLastPosition()
-            DatabaseNamesEnum.DINNER_DATABASE -> model.getDinnerLastPosition()
-            DatabaseNamesEnum.EXTRA_MEALS_DATABASE -> model.getExtraLastPosition()
-        }
-    }
 }

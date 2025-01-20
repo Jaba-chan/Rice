@@ -54,6 +54,7 @@ class FoodFragment : Fragment(R.layout.food_fragment) {
 
         pager.adapter = initViewPager(weekDates)
         pager.isUserInputEnabled = false
+        pager.offscreenPageLimit = 7
         pager.setCurrentItem(currentDayOfWeek, false)
         setOnDateHeading(tvHeadingDate, weekDates[currentDayOfWeek])
         setTabLayoutMediator(model, tabs, pager, weekDates)
