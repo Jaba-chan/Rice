@@ -27,5 +27,19 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(":core")
+include(":core")
+include(":core:common")
+include(":core:data")
+include(":core:database")
+include(":core:database")
+include(":core:designsystem")
+include(":core:domain")
+include(":core:domain")
+include(":core:network")
+include(":data")
 
+include(":feature")
+include(":feature:food")
 include(":composeApp")
+include(":shared")
