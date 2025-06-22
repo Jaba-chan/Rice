@@ -29,26 +29,6 @@ kotlin {
         }
     }
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        outputModuleName = "data"
-        browser {
-            val rootDirPath = project.rootDir.path
-            val projectDirPath = project.projectDir.path
-            commonWebpackConfig {
-                outputFileName = "data.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(rootDirPath)
-                        add(projectDirPath)
-                    }
-                }
-            }
-        }
-        binaries.executable()
-    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(libs.koin.androidx.compose)
