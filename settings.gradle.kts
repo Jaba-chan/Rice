@@ -37,6 +37,7 @@ include(":core:designsystem")
 include(":core:domain")
 include(":core:domain")
 include(":core:network")
+include(":core:network:src")
 include(":data")
 
 include(":feature")
