@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -51,14 +53,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.androidx.room.compiler)
+            implementation(libs.androidx.room.gradle.plugin)
+            implementation(libs.androidx.room.runtime)
         }
         androidMain.dependencies {
         }
@@ -67,7 +65,13 @@ kotlin {
         commonTest.dependencies {
         }
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
+
+
 
 android {
     namespace = "ru.evgenykuzakov.rice.core.database"
