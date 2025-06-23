@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(project(":shared"))
+            api(project(":feature:food"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
