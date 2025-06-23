@@ -23,9 +23,10 @@ ksp = "2.1.21-2.0.2"
 room = "2.7.2"
 sqlite = "2.5.2"
 jetbrainsKotlinJvmVersion = "1.9.0"
-
+coroutinesVersion = "1.10.2"
 
 [libraries]
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesVersion" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
