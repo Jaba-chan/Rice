@@ -18,6 +18,7 @@ fun MealEntity.toDomain() = Meal(
     fats = fats
 )
 
+
 fun Meal.toEntity() = MealEntity(
     id = id,
     parentId = parentId,
