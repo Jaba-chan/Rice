@@ -3,7 +3,7 @@ package ru.evgenykuzakov.rice.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.evgenykuzakov.rice.data.local.DatabaseNamesEnum
+import ru.evgenykuzakov.rice.DatabaseNamesEnum
 
 @Entity(tableName = "meals")
 data class MealEntity(

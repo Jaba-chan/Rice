@@ -31,10 +31,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.koin.androidx.compose)
+            implementation(libs.koin.core)
             implementation(libs.kotlinx.serialization.json)
         }
         androidMain.dependencies {
+            implementation(libs.koin.android)
+
         }
         iosMain.dependencies {
         }

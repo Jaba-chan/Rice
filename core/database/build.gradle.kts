@@ -6,8 +6,6 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.ksp)
 }
 
@@ -27,6 +25,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "database"
             isStatic = true
+            linkerOpts.add("-lsqlite3")
         }
     }
 
@@ -68,7 +67,6 @@ android {
 }
 
 dependencies {
-
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosSimulatorArm64", libs.androidx.room.compiler)
     add("kspIosX64", libs.androidx.room.compiler)
