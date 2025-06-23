@@ -23,7 +23,7 @@ fun Meal.toEntity() = MealEntity(
     parentId = parentId,
     name = name,
     amount = amount,
-    database = DatabaseNamesEnum.entries.first {it.name == database.name},
+    database = database.name,
     position = position,
     date = date,
     calories = calories,

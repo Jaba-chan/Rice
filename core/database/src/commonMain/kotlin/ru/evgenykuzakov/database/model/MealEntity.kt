@@ -10,7 +10,7 @@ data class MealEntity(
     @ColumnInfo(name = "parentId") val parentId: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "amount") val amount: Int,
-    @ColumnInfo(name = "database") val database: DatabaseNamesEnumEntity,
+    @ColumnInfo(name = "database") val database: String,
     @ColumnInfo(name = "position") val position: Int,
     @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "calories") val calories: Int?,
