@@ -1,13 +1,13 @@
-package ru.evgenykuzakov.rice.dao
+package ru.evgenykuzakov.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import ru.evgenykuzakov.rice.DatabaseNamesEnum
-import ru.evgenykuzakov.rice.model.MealEntity
-import ru.evgenykuzakov.rice.model.NutrientsEntity
+import ru.evgenykuzakov.database.DatabaseNamesEnum
+import ru.evgenykuzakov.database.model.MealEntity
+import ru.evgenykuzakov.database.model.NutrientsEntity
 
 @Dao
 interface UserMealDao {

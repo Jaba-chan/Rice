@@ -1,9 +1,9 @@
-package ru.evgenykuzakov.rice.model
+package ru.evgenykuzakov.database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.evgenykuzakov.rice.DatabaseNamesEnum
+import ru.evgenykuzakov.database.DatabaseNamesEnum
 
 @Entity(tableName = "meals")
 data class MealEntity(

@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.rice
+package ru.evgenykuzakov.database
 
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -6,7 +6,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
-import ru.evgenykuzakov.rice.room_db.UserMealsDatabase
+import ru.evgenykuzakov.database.room_db.UserMealsDatabase
 
 fun getDatabaseBuilder(): RoomDatabase.Builder<UserMealsDatabase> {
     val dbFilePath = documentDirectory() + "/meals.db"

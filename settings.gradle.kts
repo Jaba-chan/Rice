@@ -28,19 +28,15 @@ dependencyResolutionManagement {
     }
 }
 include(":core")
-include(":core")
 include(":core:common")
 include(":core:data")
 include(":core:database")
-include(":core:database")
 include(":core:designsystem")
-include(":core:domain")
-include(":core:domain")
 include(":core:network")
-include(":core:network:src")
-include(":data")
+include(":core:domain")
 
 include(":feature")
 include(":feature:food")
 include(":composeApp")
 include(":shared")
+

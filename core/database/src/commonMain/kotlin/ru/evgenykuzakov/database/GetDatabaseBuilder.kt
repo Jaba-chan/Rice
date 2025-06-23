@@ -1,10 +1,10 @@
-package ru.evgenykuzakov.rice
+package ru.evgenykuzakov.database
 
 import androidx.room.RoomDatabase
 import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import ru.evgenykuzakov.rice.room_db.UserMealsDatabase
+import ru.evgenykuzakov.database.room_db.UserMealsDatabase
 
 fun getRoomDatabase(
     builder: RoomDatabase.Builder<UserMealsDatabase>

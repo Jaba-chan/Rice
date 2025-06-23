@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.rice.room_db
+package ru.evgenykuzakov.database.room_db
 
 import androidx.room.RoomDatabaseConstructor
 
