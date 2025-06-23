@@ -22,6 +22,7 @@ koinComposeMultiplatform = "4.0.3"
 ksp = "2.1.21-2.0.2"
 room = "2.7.2"
 sqlite = "2.5.2"
+jetbrainsKotlinJvmVersion = "1.9.0"
 
 
 [libraries]
@@ -63,4 +64,5 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
+jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvmVersion" }
 

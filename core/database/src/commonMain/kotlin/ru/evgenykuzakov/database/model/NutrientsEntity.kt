@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.rice.model
+package ru.evgenykuzakov.database.model
 
 data class NutrientsEntity(
     val calories: Int,
