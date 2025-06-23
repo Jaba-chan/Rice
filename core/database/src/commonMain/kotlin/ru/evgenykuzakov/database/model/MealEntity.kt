@@ -3,7 +3,6 @@ package ru.evgenykuzakov.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.evgenykuzakov.database.DatabaseNamesEnum
 
 @Entity(tableName = "meals")
 data class MealEntity(
@@ -11,7 +10,7 @@ data class MealEntity(
     @ColumnInfo(name = "parentId") val parentId: Int,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "amount") val amount: Int,
-    @ColumnInfo(name = "database") val database: DatabaseNamesEnum,
+    @ColumnInfo(name = "database") val database: DatabaseNamesEnumEntity,
     @ColumnInfo(name = "position") val position: Int,
     @ColumnInfo(name = "date") val date: String,
     @ColumnInfo(name = "calories") val calories: Int?,
