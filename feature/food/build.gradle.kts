@@ -29,7 +29,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(project(":core:data"))
+            implementation(project(":core:data"))
+            implementation(project(":core:domain"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -39,6 +40,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         androidMain.dependencies {
             implementation(compose.preview)
