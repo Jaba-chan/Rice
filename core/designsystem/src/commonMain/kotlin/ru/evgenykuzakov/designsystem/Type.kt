@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.designsystem.theme
+package ru.evgenykuzakov.designsystem
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -21,7 +21,7 @@ val Typography = Typography(
     ),
     bodyMedium =  TextStyle(
         fontWeight = FontWeight.W500,
-        fontSize = 15.sp,
+        fontSize = 16.sp,
         lineHeight = (15 * 1.16).sp,
         letterSpacing = 0.sp
     ),

@@ -5,7 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import ru.evgenykuzakov.designsystem.theme.Typography
 
 private val LightColors = lightColorScheme(
     primary = Blue,
@@ -13,7 +12,7 @@ private val LightColors = lightColorScheme(
     surface = DarkGray,
     surfaceContainer = Gray,
     surfaceContainerHigh = LightGray,
-    onSurface = WeakWhite
+    onSurface = White
 )
 
 private val DarkColors = darkColorScheme(
@@ -22,7 +21,7 @@ private val DarkColors = darkColorScheme(
     surface = DarkGray,
     surfaceContainer = Gray,
     surfaceContainerHigh = LightGray,
-    onSurface = WeakWhite
+    onSurface = White
 )
 
 @Composable
