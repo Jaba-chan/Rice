@@ -6,10 +6,8 @@ import rice.composeapp.generated.resources.Res
 import rice.composeapp.generated.resources.food
 import rice.composeapp.generated.resources.ic_food
 import rice.composeapp.generated.resources.ic_person
-import rice.composeapp.generated.resources.ic_statistics
 import rice.composeapp.generated.resources.ic_training
 import rice.composeapp.generated.resources.profile
-import rice.composeapp.generated.resources.statistics
 import rice.composeapp.generated.resources.training
 
 sealed class NavigationItem(
@@ -29,17 +27,10 @@ sealed class NavigationItem(
         iconResId = Res.drawable.ic_person
 
     )
-    object Statistic: NavigationItem(
-        screen = Screen.StatisticScreen,
-        titleResId = Res.string.statistics,
-        iconResId = Res.drawable.ic_statistics
-
-    )
 
     object Training: NavigationItem(
         screen = Screen.TrainingScreen,
         titleResId = Res.string.training,
         iconResId = Res.drawable.ic_training
-
     )
 }

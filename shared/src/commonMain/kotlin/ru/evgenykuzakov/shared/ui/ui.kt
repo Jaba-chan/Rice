@@ -1,15 +1,23 @@
 package ru.evgenykuzakov.shared.ui
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDefaults
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import rice.shared.generated.resources.Res
@@ -30,30 +38,45 @@ fun DatePickerModalInput(
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            DialogButton(
-                onClick = {
-                    onDateSelected(datePickerState.selectedDateMillis?.formatMillisToDate())
-                    onDismiss()
-                },
-                text = stringResource(Res.string.ok)
-            )
+            Box(
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+            ) {
+                DialogButton(
+                    onClick = {
+                        onDateSelected(datePickerState.selectedDateMillis?.formatMillisToDate())
+                        onDismiss()
+                    },
+                    text = stringResource(Res.string.ok)
+                )
+            }
         },
         dismissButton = {
-            DialogButton(
-                onClick = onDismiss,
-                text = stringResource(Res.string.cancel)
-            )
+            Box(
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+            ) {
+                DialogButton(
+                    onClick = onDismiss,
+                    text = stringResource(Res.string.cancel)
+                )
+            }
         },
         colors = DatePickerDefaults.colors(
-            containerColor =  MaterialTheme.colorScheme.surface
+            containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
-        DatePicker(
-            state = datePickerState,
-            colors = DatePickerDefaults.colors(
-                containerColor =  MaterialTheme.colorScheme.surface,
+        Column {
+            DatePicker(
+                state = datePickerState,
+                colors = DatePickerDefaults.colors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                )
             )
-        )
+            Spacer(modifier = Modifier.height(8.dp))
+            HorizontalDivider()
+        }
+
     }
 }
 

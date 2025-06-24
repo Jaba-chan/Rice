@@ -4,13 +4,11 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import ru.evgenykuzakov.rice.navigation.Screen
 
 fun NavGraphBuilder.bottomNavGraph(
     profileScreenContent: @Composable () -> Unit,
     foodScreenContent: @Composable () -> Unit,
     trainingScreenContent: @Composable () -> Unit,
-    statisticScreenContent: @Composable () -> Unit
 ){
     navigation(
         startDestination = Screen.FoodScreen.route,
@@ -24,9 +22,6 @@ fun NavGraphBuilder.bottomNavGraph(
         }
         composable(Screen.TrainingScreen.route) {
             trainingScreenContent()
-        }
-        composable(Screen.StatisticScreen.route) {
-            statisticScreenContent()
         }
     }
 }

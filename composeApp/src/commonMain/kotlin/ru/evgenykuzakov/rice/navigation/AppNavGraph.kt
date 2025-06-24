@@ -18,7 +18,6 @@ fun AppNavGraph(
     profileScreenContent: @Composable () -> Unit,
     foodScreenContent: @Composable () -> Unit,
     trainingScreenContent: @Composable () -> Unit,
-    statisticScreenContent: @Composable () -> Unit
 ) {
     NavHost(
         navController = navHostController,
@@ -40,14 +39,10 @@ fun AppNavGraph(
         composable(Screen.TrainingScreen.route) {
             trainingScreenContent()
         }
-        composable(Screen.StatisticScreen.route) {
-            statisticScreenContent()
-        }
         bottomNavGraph(
             profileScreenContent = profileScreenContent,
             foodScreenContent = foodScreenContent,
-            trainingScreenContent = trainingScreenContent,
-            statisticScreenContent = statisticScreenContent
+            trainingScreenContent = trainingScreenContent
         )
     }
 }

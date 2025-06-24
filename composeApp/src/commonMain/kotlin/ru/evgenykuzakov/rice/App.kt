@@ -2,6 +2,8 @@ package ru.evgenykuzakov.rice
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
@@ -18,6 +20,7 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
 import ru.evgenykuzakov.designsystem.RiceTheme
+import ru.evgenykuzakov.food.ShowMealsScreen
 import ru.evgenykuzakov.rice.navigation.AppNavGraph
 import ru.evgenykuzakov.rice.navigation.NavigationItem
 import ru.evgenykuzakov.rice.navigation.NavigationState
@@ -35,11 +38,10 @@ fun App(
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
 
-            val items = listOf(
+            val navigationItems = listOf(
                 NavigationItem.Person,
                 NavigationItem.Food,
                 NavigationItem.Training,
-                NavigationItem.Statistic
             )
 
             val state by viewModel.uiState.collectAsState()
@@ -64,7 +66,13 @@ fun App(
                     )
                 },
                 bottomBar = {
-
+                    if (currentRoute in navigationItems.map { it.screen.route }) {
+                        NavBar(
+                            items = navigationItems,
+                            currentRoute = currentRoute,
+                            onNavigate = navState::navigateTo
+                        )
+                    }
                 }
             ) {
 
@@ -73,29 +81,14 @@ fun App(
                     signInScreenContent = {},
                     signUpScreenContent = {},
                     profileScreenContent = {},
-                    foodScreenContent = {},
+                    foodScreenContent = {
+                        ShowMealsScreen()
+                    },
                     trainingScreenContent = {},
-                    statisticScreenContent = {}
                 )
             }
         }
     }
 }
 
-@Composable
-fun RoundedTab(
-    text: @Composable () -> Unit,
-    onClick: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 4.dp, vertical = 8.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick)
-            .padding(horizontal = 8.dp, vertical = 16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        text()
-    }
-}
 
