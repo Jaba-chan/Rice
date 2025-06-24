@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Rice</string>
 
+    <string name="statistics">Статистика</string>
+    <string name="profile">Профиль</string>
+    <string name="food">Еда</string>
+    <string name="training">Тренировки</string>
+
     <string name="calendar_icon_cd">Выберите день</string>
+    <string name="tab_icon_cd">Отображает статус цели на день</string>
 </resources>

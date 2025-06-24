@@ -41,6 +41,7 @@ kotlin {
             implementation(project(":core:domain"))
             implementation(project(":core:database"))
             implementation(project(":core:designsystem"))
+            implementation(libs.navigation.compose)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
