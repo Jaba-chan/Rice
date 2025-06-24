@@ -26,6 +26,7 @@ jetbrainsKotlinJvmVersion = "1.9.0"
 coroutinesVersion = "1.10.2"
 navigationCompose = "2.8.0-alpha10"
 lifecycleViewModel = "2.9.1"
+dateTimeVersion = "0.6.0"
 
 [libraries]
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutinesVersion" }
@@ -60,6 +61,7 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewModel"}
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "dateTimeVersion" }
 
 
 [plugins]

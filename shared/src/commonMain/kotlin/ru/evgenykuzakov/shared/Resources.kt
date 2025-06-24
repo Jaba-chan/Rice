@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.rice
+package ru.evgenykuzakov.shared
 
 import rice.shared.generated.resources.Res
 import rice.shared.generated.resources.compose_multiplatform

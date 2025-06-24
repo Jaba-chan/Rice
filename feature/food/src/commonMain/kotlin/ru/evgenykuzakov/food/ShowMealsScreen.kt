@@ -4,7 +4,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import org.koin.compose.viewmodel.koinViewModel
-import ru.evgenykuzakov.data.local.LocalUserMealRepositoryImpl
 import ru.evgenykuzakov.food.placeholder.MealItem
 import ru.evgenykuzakov.food.placeholder.ShowMealsItemsScreenItem
 
@@ -12,7 +11,7 @@ import ru.evgenykuzakov.food.placeholder.ShowMealsItemsScreenItem
 fun ShowMealsScreen(
     viewModel: ShowMealsViewModel = koinViewModel(),
 ){
-    var state = viewModel.uiState
+    val state = viewModel.uiState
     val screenItems = buildList<ShowMealsItemsScreenItem> {
         repeat(2){
             add(ShowMealsItemsScreenItem.MealItem)
