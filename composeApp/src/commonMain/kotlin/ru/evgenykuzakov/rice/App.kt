@@ -1,20 +1,11 @@
 package ru.evgenykuzakov.rice
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.KoinContext
@@ -24,6 +15,8 @@ import ru.evgenykuzakov.food.ShowMealsScreen
 import ru.evgenykuzakov.rice.navigation.AppNavGraph
 import ru.evgenykuzakov.rice.navigation.NavigationItem
 import ru.evgenykuzakov.rice.navigation.NavigationState
+import ru.evgenykuzakov.rice.navigation.Screen
+import ru.evgenykuzakov.search_food.SearchProductsScreen
 import ru.evgenykuzakov.shared.ui.DatePickerModalInput
 
 @Composable
@@ -59,11 +52,13 @@ fun App(
 
             Scaffold(
                 topBar = {
+                    if (currentRoute in navigationItems.map { it.screen.route }) {
                     TopBar(
                         onSetDatePickerVisibility = viewModel::setDatePickerVisibility,
                         onSelectDate = viewModel::selectDate,
                         state = state
                     )
+                    }
                 },
                 bottomBar = {
                     if (currentRoute in navigationItems.map { it.screen.route }) {
@@ -73,6 +68,12 @@ fun App(
                             onNavigate = navState::navigateTo
                         )
                     }
+                },
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = { navState.navigateTo(Screen.SearchProductScreen.route) },
+                        content = {}
+                    )
                 }
             ) {
 
@@ -85,6 +86,9 @@ fun App(
                         ShowMealsScreen()
                     },
                     trainingScreenContent = {},
+                    searchProductsScreenContent = {
+                        SearchProductsScreen()
+                    }
                 )
             }
         }

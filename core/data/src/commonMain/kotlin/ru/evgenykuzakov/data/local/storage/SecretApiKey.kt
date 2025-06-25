@@ -4,6 +4,6 @@ expect object SecretApiKeys {
     fun getFirebaseApiKey(): String
 }
 
-fun provideFirebaseApiKey(): SecretApiKeys {
-    return SecretApiKeys
+fun provideFirebaseApiKey(): String {
+    return SecretApiKeys.getFirebaseApiKey()
 }

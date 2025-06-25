@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import ru.evgenykuzakov.domain.model.Meal
-import ru.evgenykuzakov.food.ShowMealsContentType
 
 @Composable
 fun MealItem(meal: Meal){

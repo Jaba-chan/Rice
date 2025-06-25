@@ -7,6 +7,7 @@ sealed class Screen(val route: String) {
     object FoodScreen: Screen(ROUTE_FOOD)
     object TrainingScreen: Screen(ROUTE_TRAINING)
     object HomeScreen: Screen(ROUTE_HOME)
+    object SearchProductScreen: Screen(ROUTE_SEARCH_PRODUCT)
 
 
     companion object {
@@ -16,5 +17,6 @@ sealed class Screen(val route: String) {
         const val ROUTE_FOOD = "food"
         const val ROUTE_TRAINING = "training"
         const val ROUTE_HOME = "home"
+        const val ROUTE_SEARCH_PRODUCT = "search_product"
     }
 }

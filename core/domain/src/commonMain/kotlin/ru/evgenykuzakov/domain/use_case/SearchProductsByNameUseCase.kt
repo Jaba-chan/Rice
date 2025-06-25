@@ -8,12 +8,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import ru.evgenykuzakov.common.Resource
 import ru.evgenykuzakov.domain.model.Meal
+import ru.evgenykuzakov.domain.model.Product
 import ru.evgenykuzakov.domain.repository.RemoteProductRepository
 
 class SearchProductsByNameUseCase(
     private val repository: RemoteProductRepository
 ) {
-    operator fun invoke(name: String): Flow<Resource<List<Meal>>> =
+    operator fun invoke(name: String): Flow<Resource<List<Product>>> =
         flow {
             emit(Resource.Loading())
             emit(Resource.Success(repository.searchProductByName(name)))

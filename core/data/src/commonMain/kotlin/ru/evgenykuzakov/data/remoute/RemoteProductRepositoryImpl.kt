@@ -10,25 +10,24 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
-import ru.evgenykuzakov.data.local.storage.SecretApiKeys
 import ru.evgenykuzakov.data.mapper.toDomain
-import ru.evgenykuzakov.data.remoute.model.ProductResponse
-import ru.evgenykuzakov.domain.model.Meal
+import ru.evgenykuzakov.data.mapper.toProductDto
+import ru.evgenykuzakov.data.remoute.model.RunQueryResponse
+import ru.evgenykuzakov.domain.model.Product
 import ru.evgenykuzakov.domain.repository.RemoteProductRepository
 
 class RemoteProductRepositoryImpl(
     private val client: HttpClient,
-    private val apiKey: SecretApiKeys
+    private val apiKey: String
 ) : RemoteProductRepository {
 
-    override suspend fun searchProductByName(name: String): List<Meal> {
-        val url = "https://firestore.googleapis.com/v1/projects" +
-                "/YOUR_PROJECT_ID/databases/(default)/documents:runQuery?key=$apiKey"
-        val response: ProductResponse = client.post(url) {
+    override suspend fun searchProductByName(name: String): List<Product> {
+        val url = "https://firestore.googleapis.com/v1/projects/rice-70d39/databases/(default)/documents:runQuery?key=$apiKey"
+        val response:List<RunQueryResponse> = client.post(url) {
             contentType(ContentType.Application.Json)
             setBody(buildFirestoreQueryJson(name))
         }.body()
-        return response.products.map { it.toDomain() }.take(10)
+        return response.mapNotNull { it.document }.map { it.toProductDto().toDomain() }.take(3)
     }
 
     private fun buildFirestoreQueryJson(searchToken: String): JsonObject {
@@ -46,7 +45,7 @@ class RemoteProductRepositoryImpl(
                         })
                         put("op", "ARRAY_CONTAINS")
                         put("value", buildJsonObject {
-                            put("stringValue", searchToken)
+                            put("stringValue", "кофе")
                         })
                     })
                 })
