@@ -33,6 +33,8 @@ include(":core:data")
 include(":core:database")
 include(":core:designsystem")
 include(":core:network")
+include(":core:network")
+include(":core:network")
 include(":core:domain")
 
 include(":feature")

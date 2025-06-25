@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.koin.compose.viewmodel.koinViewModel
 import ru.evgenykuzakov.rice.MainActivityViewModel
+import ru.evgenykuzakov.search_food.placeholder.SearchProductsItems
 
 
 @Composable
@@ -18,6 +19,7 @@ fun AppNavGraph(
     profileScreenContent: @Composable () -> Unit,
     foodScreenContent: @Composable () -> Unit,
     trainingScreenContent: @Composable () -> Unit,
+    searchProductsScreenContent: @Composable () -> Unit,
 ) {
     NavHost(
         navController = navHostController,
@@ -38,6 +40,9 @@ fun AppNavGraph(
         }
         composable(Screen.TrainingScreen.route) {
             trainingScreenContent()
+        }
+        composable(Screen.SearchProductScreen.route) {
+            searchProductsScreenContent()
         }
         bottomNavGraph(
             profileScreenContent = profileScreenContent,
