@@ -1,5 +1,6 @@
 package ru.evgenykuzakov.data.mapper
 
+import ru.evgenykuzakov.data.remoute.model.ProductDto
 import ru.evgenykuzakov.database.model.MealEntity
 import ru.evgenykuzakov.domain.model.DatabaseNamesEnum
 import ru.evgenykuzakov.domain.model.Meal
@@ -24,6 +25,20 @@ fun Meal.toEntity() = MealEntity(
     name = name,
     amount = amount,
     database = database.name,
+    position = position,
+    date = date,
+    calories = calories,
+    protein = protein,
+    carbohydrates = carbohydrates,
+    fats = fats
+)
+
+fun ProductDto.toDomain() = Meal(
+    id = id,
+    parentId = parentId,
+    name = name,
+    amount = amount,
+    database = database,
     position = position,
     date = date,
     calories = calories,

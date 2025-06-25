@@ -2,7 +2,7 @@ package ru.evgenykuzakov.domain.model
 
 
 data class Meal(
-   val id: Int = 0,
+   val id: Int,
    val parentId: Int,
    val name: String,
    val amount: Int,

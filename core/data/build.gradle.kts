@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinxSerialization)
 }
 
 kotlin {
@@ -31,6 +32,7 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core:domain"))
             implementation(project(":core:database"))
+            implementation(project(":core:network"))
             implementation(libs.koin.core)
             implementation(libs.kotlinx.serialization.json)
         }
@@ -49,11 +51,22 @@ android {
     namespace = "ru.evgenykuzakov.rice.core.data"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
+    buildFeatures{
+        buildConfig = true
+    }
+
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
+        buildConfigField(
+            "String",
+            "FIREBASE_API_KEY",
+            "\"${project.findProperty("FIREBASE_API_KEY")}\""
+        )
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
 }
