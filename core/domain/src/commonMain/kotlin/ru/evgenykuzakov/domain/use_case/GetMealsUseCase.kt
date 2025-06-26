@@ -13,10 +13,10 @@ import ru.evgenykuzakov.domain.repository.LocalUserMealRepository
 class GetMealsUseCase(
     private val repository: LocalUserMealRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Meal>>> =
+    operator fun invoke(date: String): Flow<Resource<List<Meal>>> =
         flow {
             emit(Resource.Loading())
-            emit(Resource.Success(repository.getMeals()))
+            emit(Resource.Success(repository.getMeals(date)))
         }.catch { e ->
             emit(Resource.Error(e.message))
         }.flowOn(Dispatchers.IO)

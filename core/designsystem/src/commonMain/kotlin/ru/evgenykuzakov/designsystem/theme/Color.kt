@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.designsystem
+package ru.evgenykuzakov.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 

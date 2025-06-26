@@ -8,4 +8,5 @@
 
     <string name="calendar_icon_cd">Выберите день</string>
     <string name="tab_icon_cd">Отображает статус цели на день</string>
+    <string name="fab_icon_cd">Добавить</string>
 </resources>

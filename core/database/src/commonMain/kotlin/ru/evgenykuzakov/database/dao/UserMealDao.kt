@@ -14,6 +14,9 @@ interface UserMealDao {
     @Query("SELECT * FROM meals")
     fun getAll(): List<MealEntity>
 
+    @Query("SELECT * FROM meals WHERE date LIKE :date")
+    fun getAllByDAte(date: String): MutableList<MealEntity>
+
     @Query(
         "SELECT SUM(calories) as calories, " +
                 "SUM(protein) as protein, " +

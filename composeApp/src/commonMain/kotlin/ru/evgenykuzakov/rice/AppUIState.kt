@@ -1,8 +1,8 @@
 package ru.evgenykuzakov.rice
 
 import kotlinx.datetime.LocalDate
-import ru.evgenykuzakov.shared.util.getTodayDate
-import ru.evgenykuzakov.shared.util.getWeak
+import ru.evgenykuzakov.common.util.getTodayDate
+import ru.evgenykuzakov.common.util.getWeak
 
 data class AppUIState(
     val selectedDate: LocalDate = getTodayDate(),

@@ -31,6 +31,8 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core:data"))
             implementation(project(":core:domain"))
+            implementation(project(":core:designsystem"))
+            implementation(project(":core:common"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -41,6 +43,8 @@ kotlin {
             implementation(libs.lifecycle.viewmodel)
             implementation(libs.navigation.compose)
             implementation(libs.koin.compose.viewmodel)
+            implementation(libs.kotlinx.datetime)
+
         }
         androidMain.dependencies {
             implementation(compose.preview)

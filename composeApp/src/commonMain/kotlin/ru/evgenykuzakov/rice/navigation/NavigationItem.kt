@@ -16,7 +16,7 @@ sealed class NavigationItem(
     val iconResId: DrawableResource
 ) {
     object Food: NavigationItem(
-        screen = Screen.FoodScreen,
+        screen = Screen.ShowFoodsScreen,
         titleResId = Res.string.food,
         iconResId = Res.drawable.ic_food
         

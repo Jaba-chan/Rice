@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.rice
+package ru.evgenykuzakov.rice.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,9 +28,11 @@ import rice.composeapp.generated.resources.Res
 import rice.composeapp.generated.resources.calendar_icon_cd
 import rice.composeapp.generated.resources.ic_calendar
 import rice.composeapp.generated.resources.ic_check_circle
+import rice.composeapp.generated.resources.ic_empty_circle
 import rice.composeapp.generated.resources.tab_icon_cd
-import ru.evgenykuzakov.shared.util.getFormattedDate
-import ru.evgenykuzakov.shared.util.getFormattedToDayOfWeekDate
+import ru.evgenykuzakov.rice.AppUIState
+import ru.evgenykuzakov.common.util.getFormattedDate
+import ru.evgenykuzakov.common.util.getFormattedToDayOfWeekDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,8 +88,6 @@ fun TopBar(
                 RoundedTab(
                     onClick = {
                         onSelectDate(date)
-                        println(selectedPos)
-                        println(state.selectedDate.dayOfWeek)
                     },
                     text = {
                         Text(
@@ -101,9 +101,9 @@ fun TopBar(
                     },
                     icon = {
                         Icon(
-                            painter = painterResource(Res.drawable.ic_check_circle),
+                            painter = painterResource(Res.drawable.ic_empty_circle),
                             contentDescription = stringResource(Res.string.tab_icon_cd),
-                            tint = Color.Red
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 )
@@ -127,6 +127,7 @@ fun RoundedTab(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         icon()
+        Spacer(modifier = Modifier.height(8.dp))
         text()
     }
 }

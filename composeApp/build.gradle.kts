@@ -35,12 +35,12 @@ kotlin {
             implementation(libs.koin.android)
         }
         commonMain.dependencies {
-            implementation(project(":shared"))
             implementation(project(":feature:food"))
             implementation(project(":core:data"))
             implementation(project(":core:domain"))
             implementation(project(":core:database"))
             implementation(project(":core:designsystem"))
+            implementation(project(":core:common"))
             implementation(libs.navigation.compose)
             implementation(compose.runtime)
             implementation(compose.foundation)

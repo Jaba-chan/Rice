@@ -40,5 +40,4 @@ include(":core:domain")
 include(":feature")
 include(":feature:food")
 include(":composeApp")
-include(":shared")
 

@@ -7,7 +7,9 @@ import androidx.navigation.compose.navigation
 
 fun NavGraphBuilder.bottomNavGraph(
     profileScreenContent: @Composable () -> Unit,
-    foodScreenContent: @Composable () -> Unit,
+    showFoodScreenContent: @Composable () -> Unit,
+    searchProductScreenContent: @Composable () -> Unit,
+    addFoodScreenContent: @Composable () -> Unit,
     trainingScreenContent: @Composable () -> Unit,
 ){
     navigation(
@@ -17,9 +19,11 @@ fun NavGraphBuilder.bottomNavGraph(
         composable(Screen.ProfileScreen.route) {
             profileScreenContent()
         }
-        composable(Screen.FoodScreen.route) {
-            foodScreenContent()
-        }
+        featureFoodNavGraph(
+            showFoodScreenContent = showFoodScreenContent,
+            searchProductScreenContent = searchProductScreenContent,
+            addFoodScreenContent = addFoodScreenContent
+        )
         composable(Screen.TrainingScreen.route) {
             trainingScreenContent()
         }

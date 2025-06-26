@@ -10,8 +10,8 @@ import ru.evgenykuzakov.domain.repository.LocalUserMealRepository
 class LocalUserMealRepositoryImpl(
     private val dao: UserMealDao
 ): LocalUserMealRepository {
-    override suspend fun getMeals(): List<Meal> {
-        return dao.getAll().map { it.toDomain() }
+    override suspend fun getMeals(date: String): List<Meal> {
+        return dao.getAllByDAte(date = date).map { it.toDomain() }
     }
 
     override suspend fun addMeal(meal: Meal) {

@@ -1,23 +1,27 @@
 package ru.evgenykuzakov.rice
 
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
-import ru.evgenykuzakov.designsystem.RiceTheme
-import ru.evgenykuzakov.food.ShowMealsScreen
+import ru.evgenykuzakov.designsystem.theme.RiceTheme
+import ru.evgenykuzakov.show_food.ShowMealsScreen
 import ru.evgenykuzakov.rice.navigation.AppNavGraph
 import ru.evgenykuzakov.rice.navigation.NavigationItem
 import ru.evgenykuzakov.rice.navigation.NavigationState
 import ru.evgenykuzakov.rice.navigation.Screen
+import ru.evgenykuzakov.rice.ui.Fab
+import ru.evgenykuzakov.rice.ui.NavBar
+import ru.evgenykuzakov.rice.ui.TopBar
 import ru.evgenykuzakov.search_food.SearchProductsScreen
-import ru.evgenykuzakov.shared.ui.DatePickerModalInput
+import ru.evgenykuzakov.designsystem.DatePickerModalInput
 
 @Composable
 fun App(
@@ -51,13 +55,15 @@ fun App(
             }
 
             Scaffold(
+                modifier = Modifier
+                    .fillMaxSize(),
                 topBar = {
                     if (currentRoute in navigationItems.map { it.screen.route }) {
-                    TopBar(
-                        onSetDatePickerVisibility = viewModel::setDatePickerVisibility,
-                        onSelectDate = viewModel::selectDate,
-                        state = state
-                    )
+                        TopBar(
+                            onSetDatePickerVisibility = viewModel::setDatePickerVisibility,
+                            onSelectDate = viewModel::selectDate,
+                            state = state
+                        )
                     }
                 },
                 bottomBar = {
@@ -70,24 +76,31 @@ fun App(
                     }
                 },
                 floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = { navState.navigateTo(Screen.SearchProductScreen.route) },
-                        content = {}
-                    )
+                    if (currentRoute in navigationItems.map { it.screen.route } && currentRoute != Screen.ProfileScreen.route) {
+                        Fab(
+                            onClick = { navState.navigateTo(Screen.SearchProductScreen.route) }
+                        )
+                    }
                 }
-            ) {
-
+            ) { paddingValues ->
                 AppNavGraph(
                     navHostController = navController,
                     signInScreenContent = {},
                     signUpScreenContent = {},
                     profileScreenContent = {},
-                    foodScreenContent = {
-                        ShowMealsScreen()
-                    },
+
                     trainingScreenContent = {},
-                    searchProductsScreenContent = {
-                        SearchProductsScreen()
+                    addFoodScreenContent = {},
+                    showFoodScreenContent = {
+                        ShowMealsScreen(
+                            selectedDate = state.selectedDate,
+                            paddingValues = paddingValues
+                        )
+                    },
+                    searchProductScreenContent = {
+                        SearchProductsScreen(
+                            paddingValues = paddingValues
+                        )
                     }
                 )
             }

@@ -10,7 +10,7 @@ import ru.evgenykuzakov.common.Resource
 import ru.evgenykuzakov.domain.model.Meal
 import ru.evgenykuzakov.domain.repository.LocalUserMealRepository
 
-class AddMealsUseCase(
+class AddMealUseCase(
     private val repository: LocalUserMealRepository
 ) {
     operator fun invoke(meal: Meal): Flow<Resource<Unit>> =
@@ -18,6 +18,7 @@ class AddMealsUseCase(
             emit(Resource.Loading())
             emit(Resource.Success(repository.addMeal(meal)))
         }.catch { e ->
+            println(e.message)
             emit(Resource.Error(e.message))
         }.flowOn(Dispatchers.IO)
 }

@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.designsystem
+package ru.evgenykuzakov.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -8,20 +8,24 @@ import androidx.compose.runtime.Composable
 
 private val LightColors = lightColorScheme(
     primary = Blue,
+    onPrimary = White,
     background = StrongGray,
     surface = DarkGray,
     surfaceContainer = Gray,
     surfaceContainerHigh = LightGray,
-    onSurface = White
+    onSurface = White,
+    onSurfaceVariant = WeakWhite
 )
 
 private val DarkColors = darkColorScheme(
     primary = Blue,
+    onPrimary = White,
     background = StrongGray,
     surface = DarkGray,
     surfaceContainer = Gray,
     surfaceContainerHigh = LightGray,
-    onSurface = White
+    onSurface = White,
+    onSurfaceVariant = WeakWhite
 )
 
 @Composable

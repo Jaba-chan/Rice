@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.koin.compose.viewmodel.koinViewModel
 import ru.evgenykuzakov.rice.MainActivityViewModel
-import ru.evgenykuzakov.search_food.placeholder.SearchProductsItems
 
 
 @Composable
@@ -17,13 +16,14 @@ fun AppNavGraph(
     signInScreenContent: @Composable () -> Unit,
     signUpScreenContent: @Composable () -> Unit,
     profileScreenContent: @Composable () -> Unit,
-    foodScreenContent: @Composable () -> Unit,
     trainingScreenContent: @Composable () -> Unit,
-    searchProductsScreenContent: @Composable () -> Unit,
+    showFoodScreenContent: @Composable () -> Unit,
+    searchProductScreenContent: @Composable () -> Unit,
+    addFoodScreenContent: @Composable () -> Unit,
 ) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.FoodScreen.route
+        startDestination = Screen.HomeScreen.route
 
     ) {
         composable(Screen.SignInScreen.route) {
@@ -32,22 +32,12 @@ fun AppNavGraph(
         composable(Screen.SignUpScreen.route) {
             signUpScreenContent()
         }
-        composable(Screen.ProfileScreen.route) {
-            profileScreenContent()
-        }
-        composable(Screen.FoodScreen.route) {
-            foodScreenContent()
-        }
-        composable(Screen.TrainingScreen.route) {
-            trainingScreenContent()
-        }
-        composable(Screen.SearchProductScreen.route) {
-            searchProductsScreenContent()
-        }
         bottomNavGraph(
             profileScreenContent = profileScreenContent,
-            foodScreenContent = foodScreenContent,
-            trainingScreenContent = trainingScreenContent
+            trainingScreenContent = trainingScreenContent,
+            showFoodScreenContent = showFoodScreenContent,
+            searchProductScreenContent = searchProductScreenContent,
+            addFoodScreenContent = addFoodScreenContent
         )
     }
 }

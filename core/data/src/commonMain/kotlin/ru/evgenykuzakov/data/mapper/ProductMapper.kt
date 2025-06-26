@@ -1,6 +1,7 @@
 package ru.evgenykuzakov.data.mapper
 
 import ru.evgenykuzakov.data.remoute.model.ProductDto
+import ru.evgenykuzakov.domain.model.Meal
 import ru.evgenykuzakov.domain.model.Product
 
 fun ProductDto.toDomain() = Product(

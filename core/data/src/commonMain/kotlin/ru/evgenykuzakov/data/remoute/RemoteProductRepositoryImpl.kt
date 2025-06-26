@@ -27,7 +27,7 @@ class RemoteProductRepositoryImpl(
             contentType(ContentType.Application.Json)
             setBody(buildFirestoreQueryJson(name))
         }.body()
-        return response.mapNotNull { it.document }.map { it.toProductDto().toDomain() }.take(3)
+        return response.mapNotNull { it.document }.map { it.toProductDto().toDomain() }
     }
 
     private fun buildFirestoreQueryJson(searchToken: String): JsonObject {
@@ -45,7 +45,7 @@ class RemoteProductRepositoryImpl(
                         })
                         put("op", "ARRAY_CONTAINS")
                         put("value", buildJsonObject {
-                            put("stringValue", "кофе")
+                            put("stringValue", searchToken)
                         })
                     })
                 })

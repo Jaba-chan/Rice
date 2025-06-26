@@ -28,6 +28,10 @@ fun LocalDate.getWeak(): MutableList<LocalDate> {
     return weekDays
 }
 
+fun LocalDate.toStringDate(): String {
+    return "${this.dayOfMonth}-${this.monthNumber}-${this.year}"
+}
+
 fun Long.formatMillisToDate(): LocalDate = Instant
         .fromEpochMilliseconds(this)
         .toLocalDateTime(TimeZone.currentSystemDefault())

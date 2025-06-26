@@ -1,4 +1,4 @@
-package ru.evgenykuzakov.rice
+package ru.evgenykuzakov.rice.ui
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
@@ -21,7 +21,7 @@ fun NavBar(
 ) {
     NavigationBar(
         modifier = Modifier
-            .height(80.dp),
+            .height(100.dp),
         containerColor = MaterialTheme.colorScheme.surface
     ) {
         items.forEach { item ->
